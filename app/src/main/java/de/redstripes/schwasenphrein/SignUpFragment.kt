@@ -1,10 +1,11 @@
 package de.redstripes.schwasenphrein
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,47 +13,35 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import de.redstripes.schwasenphrein.models.User
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [SignUpFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [SignUpFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
 class SignUpFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
 
+    // UI elements
     private var textName: EditText? = null
     private var textMail: EditText? = null
     private var textPassword: EditText? = null
     private var btnSignUp: Button? = null
     private var progressBar: ProgressBar? = null
 
+    // Firebase
     private var databaseReference: DatabaseReference? = null
     private var database: FirebaseDatabase? = null
     private var auth: FirebaseAuth? = null
-
-    private var name: String? = null
-    private var mail: String? = null
-    private var password: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         database = FirebaseDatabase.getInstance()
-        databaseReference = database!!.reference!!.child("users")
+        databaseReference = database!!.reference.child("users")
         auth = FirebaseAuth.getInstance()
     }
 
@@ -74,8 +63,6 @@ class SignUpFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
-        progressBar = ProgressBar(context)
 
         if (context is OnFragmentInteractionListener) {
             listener = context
@@ -106,37 +93,48 @@ class SignUpFragment : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @return A new instance of fragment SignUpFragment.
-         */
         @JvmStatic
         fun newInstance() = SignUpFragment()
     }
 
-    private fun createNewAccount(){
-        if(!validateForm()){
+    private fun createNewAccount() {
+        val name = textName?.text.toString()
+        val mail = textMail?.text.toString()
+
+        if (!validateForm(name, mail)) {
             return
         }
+
+        showProgress()
+        val password = textPassword?.text.toString()
+
+        auth?.createUserWithEmailAndPassword(mail, password)
+                ?.addOnCompleteListener(activity!!) { task: Task<AuthResult> ->
+                    hideProgress()
+                    verifyEmail()
+                    if (task.isSuccessful) {
+                        val user = User(name)
+                        databaseReference?.child(auth!!.currentUser!!.uid)?.setValue(user)
+
+                        // go to posts fragment
+                        // finish() ?
+                    } else {
+                        Toast.makeText(activity, "Sign Up Failed", Toast.LENGTH_SHORT).show()
+                    }
+                }
     }
 
-    private fun validateForm(): Boolean {
+    private fun validateForm(name: String, mail: String): Boolean {
         var result = true
 
-        name = textName?.text.toString()
-        mail = textMail?.text.toString()
-        password = textPassword?.text.toString()
-
-        if(TextUtils.isEmpty(name)) {
+        if (TextUtils.isEmpty(name)) {
             textName?.error = "Required"
             result = false
-        } else{
+        } else {
             textName?.error = null
         }
 
-        if(TextUtils.isEmpty(mail)) {
+        if (TextUtils.isEmpty(mail)) {
             textMail?.error = "Required"
             result = false
         } else {
@@ -147,7 +145,7 @@ class SignUpFragment : Fragment() {
     }
 
     private fun showProgress() {
-        if(progressBar == null) {
+        if (progressBar == null) {
             progressBar = ProgressBar(context)
         }
 
@@ -156,6 +154,20 @@ class SignUpFragment : Fragment() {
     }
 
     private fun hideProgress() {
+        progressBar?.visibility = View.GONE
+        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
 
+    private fun verifyEmail() {
+        val user = auth!!.currentUser;
+        user!!.sendEmailVerification()
+                .addOnCompleteListener(activity!!) { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(activity, "Verification email sent to " + user.email, Toast.LENGTH_SHORT).show()
+                    } else {
+                        Log.e(TAG, "sendEmailVerification", task.exception)
+                        Toast.makeText(activity, "Failed to send verification email.", Toast.LENGTH_SHORT).show()
+                    }
+                }
     }
 }
