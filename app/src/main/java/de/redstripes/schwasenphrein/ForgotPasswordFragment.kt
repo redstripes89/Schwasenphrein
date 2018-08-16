@@ -1,8 +1,6 @@
 package de.redstripes.schwasenphrein
 
 import android.content.ContentValues.TAG
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -13,10 +11,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.google.firebase.auth.FirebaseAuth
 
 class ForgotPasswordFragment : Fragment() {
-    private var listener: OnFragmentInteractionListener? = null
 
     // UI elements
     private var textMail: EditText? = null
@@ -25,10 +24,14 @@ class ForgotPasswordFragment : Fragment() {
     // Firebase
     private var auth: FirebaseAuth? = null
 
+    // Navigation
+    private var navController: NavController? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         auth = FirebaseAuth.getInstance()
+        navController = NavHostFragment.findNavController(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -45,37 +48,6 @@ class ForgotPasswordFragment : Fragment() {
         btnResetPassword!!.setOnClickListener { sendPasswordResetMail() }
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
-    interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
-    }
-
     companion object {
         @JvmStatic
         fun newInstance() = ForgotPasswordFragment()
@@ -90,7 +62,7 @@ class ForgotPasswordFragment : Fragment() {
                         if (task.isSuccessful) {
                             Log.d(TAG, "Email sent.")
                             Toast.makeText(activity, "Email sent.", Toast.LENGTH_SHORT).show()
-                            // back to login
+                            navController?.navigate(R.id.action_forgotPasswordFragment_to_signInFragment)
                         } else {
                             Log.w(TAG, task.exception!!.message)
                             Toast.makeText(activity, "No user found with this email.", Toast.LENGTH_SHORT).show()

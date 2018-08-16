@@ -1,8 +1,6 @@
 package de.redstripes.schwasenphrein
 
 import android.content.ContentValues.TAG
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -15,6 +13,8 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -23,7 +23,6 @@ import com.google.firebase.database.FirebaseDatabase
 import de.redstripes.schwasenphrein.models.User
 
 class SignUpFragment : Fragment() {
-    private var listener: OnFragmentInteractionListener? = null
 
     // UI elements
     private var textName: EditText? = null
@@ -37,12 +36,16 @@ class SignUpFragment : Fragment() {
     private var database: FirebaseDatabase? = null
     private var auth: FirebaseAuth? = null
 
+    // Navigation
+    private var navController: NavController?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         database = FirebaseDatabase.getInstance()
         databaseReference = database!!.reference.child("users")
         auth = FirebaseAuth.getInstance()
+        navController = NavHostFragment.findNavController(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -59,37 +62,6 @@ class SignUpFragment : Fragment() {
         btnSignUp = view.findViewById(R.id.sign_up_btn) as Button
 
         btnSignUp!!.setOnClickListener { createNewAccount() }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
-    interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
     }
 
     companion object {
@@ -116,8 +88,7 @@ class SignUpFragment : Fragment() {
                         val user = User(name)
                         databaseReference?.child(auth!!.currentUser!!.uid)?.setValue(user)
 
-                        // go to posts fragment
-                        // finish() ?
+                        navController?.navigate(R.id.action_signUpFragment_to_mainActivity)
                     } else {
                         Toast.makeText(activity, "Sign Up Failed", Toast.LENGTH_SHORT).show()
                     }

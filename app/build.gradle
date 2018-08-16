@@ -1,3 +1,4 @@
+
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
@@ -18,14 +19,19 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
     }
 }
 
+configurations.all {
+    resolutionStrategy.force 'com.android.support:support-annotations:27.1.1'
+}
+
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // Firebase
     implementation 'com.firebaseui:firebase-ui-database:4.1.0'
@@ -41,9 +47,12 @@ dependencies {
     // Support Library
     implementation 'androidx.appcompat:appcompat:1.0.0-rc01'
     implementation 'com.google.android.material:material:1.0.0-rc01'
+    implementation "android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha05"
+    implementation "android.arch.navigation:navigation-ui-ktx:1.0.0-alpha05"
 
     // Testing
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0-alpha1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0-rc01'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'

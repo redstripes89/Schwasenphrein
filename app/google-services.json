@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "573152881302-pa3lmehegl8j2db2lhku305ivbvqtjl4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.redstripes.schwasenphrein",
+            "certificate_hash": "5b2ac5119ebd351fd442297924a01ebcf3ce9911"
+          }
+        },
+        {
           "client_id": "573152881302-eglo9c2kedou21o9vmivlu52dck2k6l2.apps.googleusercontent.com",
           "client_type": 3
         }
