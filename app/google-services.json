@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "573152881302",
+    "firebase_url": "https://schwasenphrein.firebaseio.com",
+    "project_id": "schwasenphrein",
+    "storage_bucket": "schwasenphrein.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:573152881302:android:e689141b3faa70ca",
+        "android_client_info": {
+          "package_name": "de.redstripes.schwasenphrein"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "573152881302-ik5vf6oee47t0i769k79iic4634ooltq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.redstripes.schwasenphrein",
+            "certificate_hash": "4918cf533583d059ac7c177e129c6a8f7988297d"
+          }
+        },
+        {
+          "client_id": "573152881302-eglo9c2kedou21o9vmivlu52dck2k6l2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXIK1E5k0TflWHKWUcdtPuRbfoXZTiRws"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "573152881302-eglo9c2kedou21o9vmivlu52dck2k6l2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -6,6 +6,8 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 28
+    buildToolsVersion '28.0.2'
+
     defaultConfig {
         applicationId "de.redstripes.schwasenphrein"
         minSdkVersion 21
@@ -24,10 +26,27 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
-    implementation 'com.google.android.material:material:1.0.0-alpha1'
+
+    // Firebase
+    implementation 'com.firebaseui:firebase-ui-database:4.1.0'
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'com.google.firebase:firebase-auth:16.0.3'
+    implementation 'com.google.firebase:firebase-database:16.0.1'
+    // Needed to fix a dependency conflict with FirebaseUI'
+    implementation 'android.arch.core:runtime:1.1.1'
+
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // Support Library
+    implementation 'androidx.appcompat:appcompat:1.0.0-rc01'
+    implementation 'com.google.android.material:material:1.0.0-rc01'
+
+    // Testing
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0-alpha1'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0-alpha3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha3'
+    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
 }
+
+apply plugin: 'com.google.gms.google-services'
