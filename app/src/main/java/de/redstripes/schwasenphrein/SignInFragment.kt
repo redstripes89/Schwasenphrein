@@ -34,7 +34,6 @@ class SignInFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         auth = FirebaseAuth.getInstance()
-        navController = NavHostFragment.findNavController(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +44,8 @@ class SignInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        navController = NavHostFragment.findNavController(this)
 
         textForgotPassword = view.findViewById<View>(R.id.sign_in_forgot_password) as TextView
         textMail = view.findViewById<View>(R.id.sign_in_mail) as EditText
