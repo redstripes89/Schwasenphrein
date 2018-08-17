@@ -29,13 +29,13 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="mainActivity">
+                  <entry key="mainFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="417" />
-                            <option name="y" value="-65" />
+                            <option name="x" value="419" />
+                            <option name="y" value="-64" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -57,7 +57,7 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_signInFragment_to_mainActivity">
+                            <entry key="action_signInFragment_to_mainFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -83,7 +83,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_signUpFragment_to_mainActivity">
+                            <entry key="action_signUpFragment_to_mainFragment">
                               <value>
                                 <LayoutPositions />
                               </value>

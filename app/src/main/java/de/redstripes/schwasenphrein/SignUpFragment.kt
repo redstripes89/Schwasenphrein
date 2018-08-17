@@ -88,7 +88,7 @@ class SignUpFragment : Fragment() {
                         val user = User(name)
                         databaseReference?.child(auth!!.currentUser!!.uid)?.setValue(user)
 
-                        navController?.navigate(R.id.action_signUpFragment_to_mainActivity)
+                        navController?.navigate(R.id.action_signUpFragment_to_mainFragment)
                     } else {
                         Toast.makeText(activity, "Sign Up Failed", Toast.LENGTH_SHORT).show()
                     }

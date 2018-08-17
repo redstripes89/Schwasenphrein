@@ -17,11 +17,11 @@ import com.google.firebase.auth.FirebaseAuth
 class SignInFragment : Fragment() {
 
     //UI elements
-    private var textForgotPassword: TextView? = null
     private var textMail: EditText? = null
     private var textPassword: EditText? = null
     private var btnLogin: Button? = null
-    private var btnCreateAccount: Button? = null
+    private var textForgotPassword: TextView? = null
+    private var textCreateAccount: TextView?=null
     private var progressBar: ProgressBar? = null
 
     //Firebase
@@ -47,15 +47,15 @@ class SignInFragment : Fragment() {
 
         navController = NavHostFragment.findNavController(this)
 
-        textForgotPassword = view.findViewById<View>(R.id.sign_in_forgot_password) as TextView
-        textMail = view.findViewById<View>(R.id.sign_in_mail) as EditText
-        textPassword = view.findViewById<View>(R.id.sign_in_password) as EditText
-        btnLogin = view.findViewById<View>(R.id.sign_in_btn_login) as Button
-        btnCreateAccount = view.findViewById<View>(R.id.sign_in_btn_create_account) as Button
+        textMail = view.findViewById<EditText>(R.id.sign_in_mail)
+        textPassword = view.findViewById<EditText>(R.id.sign_in_password)
+        btnLogin = view.findViewById<Button>(R.id.sign_in_btn_login)
+        textForgotPassword = view.findViewById<TextView>(R.id.sign_in_forgot_password)
+        textCreateAccount = view.findViewById<TextView>(R.id.sign_in_create_account)
 
-        textForgotPassword!!.setOnClickListener { navController?.navigate(R.id.action_signInFragment_to_forgotPasswordFragment) }
-        btnCreateAccount!!.setOnClickListener { navController?.navigate(R.id.action_signInFragment_to_signUpFragment) }
         btnLogin!!.setOnClickListener { loginUser() }
+        textForgotPassword!!.setOnClickListener { navController?.navigate(R.id.action_signInFragment_to_forgotPasswordFragment) }
+        textCreateAccount!!.setOnClickListener { navController?.navigate(R.id.action_signInFragment_to_signUpFragment) }
     }
 
     companion object {
@@ -82,7 +82,7 @@ class SignInFragment : Fragment() {
                             // Sign in success, update UI with signed-in user's information
                             Log.d(TAG, "signInWithEmail:success")
 
-                            navController?.navigate(R.id.action_signInFragment_to_mainActivity)
+                            navController?.navigate(R.id.action_signInFragment_to_mainFragment)
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.e(TAG, "signInWithEmail:failure", task.exception)
