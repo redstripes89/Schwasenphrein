@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Schwasenphrein</string>
+
+    <string name="transition_login_btn">Login_Button</string>
+    <string name="transition_login_mail">Login_Mail</string>
+    <string name="transition_login_password">Login_Password</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>

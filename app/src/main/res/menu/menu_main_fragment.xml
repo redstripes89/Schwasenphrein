@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menu_refresh"
+        android:id="@+id/menu_main_fragment_refresh"
         android:icon="@drawable/ic_refresh_black_24dp"
         android:title="Refresh"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/menu_logout"
+        android:id="@+id/menu_main_fragment_logout"
         android:icon="@drawable/ic_power_settings_new_black_24dp"
         android:title="Logout"
         app:showAsAction="never" />

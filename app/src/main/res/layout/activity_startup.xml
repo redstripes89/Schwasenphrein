@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/startup_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".StartupActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        style="@style/Widget.AppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/startup_toolbar"
+            style="@style/Widget.Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/startup_toolbar_title"
+                style="@style/TextAppearance.ToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:text="@string/app_name"
+                android:textColor="@color/colorPrimary" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top|center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/margin_large"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <ImageView
+            android:id="@+id/startup_image_pig"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_large"
+            android:adjustViewBounds="true"
+            android:contentDescription="Schwasenphrein Logo"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_pig" />
+
+        <TextView
+            android:id="@+id/startup_start_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/startup_image_pig"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="Tap the pig to start" />
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -3,44 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/signInFragment">
+    app:startDestination="@id/mainFragment">
 
-    <fragment
-        android:id="@+id/signUpFragment"
-        android:name="de.redstripes.schwasenphrein.SignUpFragment"
-        android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" >
-        <action
-            android:id="@+id/action_signUpFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/signInFragment"
-        android:name="de.redstripes.schwasenphrein.SignInFragment"
-        android:label="fragment_sign_in"
-        tools:layout="@layout/fragment_sign_in" >
-        <action
-            android:id="@+id/action_signInFragment_to_forgotPasswordFragment"
-            app:destination="@id/forgotPasswordFragment" />
-        <action
-            android:id="@+id/action_signInFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
-        <action
-            android:id="@+id/action_signInFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/forgotPasswordFragment"
-        android:name="de.redstripes.schwasenphrein.ForgotPasswordFragment"
-        android:label="fragment_forgot_password"
-        tools:layout="@layout/fragment_forgot_password" >
-        <action
-            android:id="@+id/action_forgotPasswordFragment_to_signInFragment"
-            app:destination="@id/signInFragment" />
-    </fragment>
     <fragment
         android:id="@+id/mainFragment"
         android:name="de.redstripes.schwasenphrein.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" ></fragment>
 </navigation>

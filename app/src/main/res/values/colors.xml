@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#334160</color>
-    <color name="colorPrimaryDark">#001238</color>
-    <color name="colorPrimaryLight">#667188</color>
-    <color name="colorAccent">#ff3c00</color>
+    <color name="pink_face">#fdb4d0</color>
+    <color name="pink_ears">#f59dc0</color>
+    <color name="pink_mouth">#dc709b</color>
+
+    <color name="headblue_0">#001238</color>
+    <color name="headblue_1">#334160</color>
+    <color name="headblue_2">#667188</color>
+
+    <color name="colorPrimary">@color/headblue_1</color>
+    <color name="colorPrimaryDark">@color/headblue_0</color>
+    <color name="colorPrimaryLight">@color/headblue_2</color>
+    <color name="colorAccent">@color/pink_ears</color>
+    <!--<color name="colorAccent">#ff3c00</color>-->
     <!--<color name="colorAccentDark">#c30000</color>-->
     <!--<color name="colorAccentLight">#ff6a38</color>-->
     <color name="colorPrimaryText">#ffffff</color>
     <color name="colorAccentText">#ffffff</color>
 
-    <color name="indigo">#4768fd</color>
-    <color name="indigo_dark">#3c54fe</color>
-    <color name="teal">#31e7b6</color>
-    <color name="light_blue">#27e5fd</color>
-    <color name="yellow">#fcd230</color>
-    <color name="orange">#ff6c00</color>
-    <color name="white">#fff</color>
-
     <color name="tab_text">#000</color>
 
     <integer-array name="swipe_refresh">
-        <item>@color/indigo</item>
-        <item>@color/teal</item>
-        <item>@color/light_blue</item>
-        <item>@color/yellow</item>
-        <item>@color/orange</item>
+        <item>@color/pink_face</item>
+        <item>@color/pink_ears</item>
+        <item>@color/pink_mouth</item>
     </integer-array>
 </resources>

@@ -6,10 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".MainFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/main_posts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_alignParentTop="true"
+        android:clipToPadding="false"
+        android:padding="@dimen/margin_small"
+        android:scrollbars="vertical"
+        tools:listitem="@layout/item_post" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
