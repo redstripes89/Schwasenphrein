@@ -11,51 +11,41 @@
     <com.google.android.material.appbar.AppBarLayout
         style="@style/Widget.AppBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:liftOnScroll="true">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             style="@style/Widget.Toolbar"
-            android:layout_gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
+            android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="center_horizontal">
+
             <TextView
                 android:id="@+id/toolbar_title"
-                android:orientation="horizontal"
+                style="@style/TextAppearance.ToolbarTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:text="@string/app_name"
-                android:textColor="@color/colorPrimary"
-                style="@style/TextAppearance.ToolbarTitle"/>
+                android:textColor="@color/colorPrimary" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:orientation="vertical">
-
-            <fragment
-                android:id="@+id/nav_host"
-                android:name="androidx.navigation.fragment.NavHostFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:defaultNavHost="true"
-                app:navGraph="@navigation/nav_graph" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:src="@drawable/ic_add_white_24dp"
-        android:tint="@color/colorAccent" />
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <fragment
+            android:id="@+id/nav_host"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_graph" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -2,18 +2,17 @@ package de.redstripes.schwasenphrein.models
 
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
-
-import java.util.HashMap
+import java.util.*
 
 @IgnoreExtraProperties
 class Post {
 
-    var uid: String?=null
-    var author: String?=null
-    var title: String?=null
-    var body: String?=null
+    var uid: String? = null
+    var author: String? = null
+    var title: String? = null
+    var body: String? = null
     var starCount = 0
-    var stars: Map<String, Boolean> = HashMap()
+    var stars: HashMap<String, Boolean> = HashMap()
 
     constructor() {
         // Default constructor required for calls to DataSnapshot.getValue(Post.class)
