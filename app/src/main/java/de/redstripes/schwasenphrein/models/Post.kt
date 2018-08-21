@@ -8,9 +8,9 @@ import java.util.*
 class Post {
 
     var uid: String? = null
-    var author: String? = null
-    var title: String? = null
-    var body: String? = null
+    var person: String? = null
+    var text: String? = null
+    var colorIndex: Int?= null
     var starCount = 0
     var stars: HashMap<String, Boolean> = HashMap()
 
@@ -18,20 +18,20 @@ class Post {
         // Default constructor required for calls to DataSnapshot.getValue(Post.class)
     }
 
-    constructor(uid: String, author: String, title: String, body: String) {
+    constructor(uid: String, title: String, text: String, colorIndex: Int) {
         this.uid = uid
-        this.author = author
-        this.title = title
-        this.body = body
+        this.person = title
+        this.text = text
+        this.colorIndex = colorIndex
     }
 
     @Exclude
     fun toMap(): Map<String, Any> {
         val result = HashMap<String, Any>()
         result["uid"] = uid.orEmpty()
-        result["author"] = author.orEmpty()
-        result["title"] = title.orEmpty()
-        result["body"] = body.orEmpty()
+        result["person"] = person.orEmpty()
+        result["text"] = text.orEmpty()
+        result["colorIndex"] = colorIndex ?: 0
         result["starCount"] = starCount
         result["stars"] = stars
 

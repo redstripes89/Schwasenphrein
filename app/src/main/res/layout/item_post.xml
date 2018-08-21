@@ -17,8 +17,29 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/post_icon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/bg_circle" />
+
+                <TextView
+                    android:id="@+id/post_icon_text"
+                    android:textStyle="bold"
+                    android:textSize="24sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+
             <TextView
-                android:id="@+id/post_title"
+                android:id="@+id/post_person"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginEnd="@dimen/margin_small"
                 style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -48,18 +69,6 @@
             android:layout_below="@id/post_title_stars_container"
             android:layout_marginTop="@dimen/margin_small"
             tools:text="Lorem ipsum, dolor sit amet..." />
-
-        <TextView
-            android:id="@+id/post_author"
-            style="@style/Base.TextAppearance.AppCompat.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/post_text"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="@dimen/margin_small"
-            android:gravity="center_vertical"
-            android:visibility="gone"
-            tools:text="Author" />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

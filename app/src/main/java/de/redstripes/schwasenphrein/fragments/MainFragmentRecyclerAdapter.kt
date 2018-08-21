@@ -34,6 +34,7 @@ class MainFragmentRecyclerAdapter(options: FirebaseRecyclerOptions<Post>, val co
 
         viewHolder.numStarsView.setCompoundDrawablesWithIntrinsicBounds(star, null, null, null)
 
+
         // Bind Post to ViewHolder, setting OnClickListener for the star button
         viewHolder.bindToPost(model, View.OnClickListener {
             val key = postRef.key
