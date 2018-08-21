@@ -1,21 +1,20 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/pink_mouth</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textViewStyle">@style/TextAppearance.Default</item>
-        <item name="android:windowBackground">@android:color/white</item>
-        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
         <item name="android:toolbarStyle">@style/Widget.Toolbar</item>
+        <item name="android:actionBarStyle">@style/Widget.AppBar</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-        <item name="android:navigationBarColor">@color/colorPrimary</item>
+        <item name="android:navigationBarColor">@color/headblue_0</item>
         <item name="android:windowContentTransitions">true</item>
-        <item name="android:textColorPrimary">@android:color/foreground_material_light</item>
+        <item name="android:textColorPrimary">@color/headblue_0</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -25,7 +24,6 @@
 
     <style name="Widget.AppBar" parent="@style/Widget.Design.AppBarLayout" >
         <item name="popupTheme">@style/AppTheme.PopupOverlay</item>
-        <item name="android:background">@android:color/white</item>
         <item name="android:elevation">8dp</item>
         <item name="android:orientation">vertical</item>
         <item name="liftOnScroll">true</item>
@@ -38,13 +36,11 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:textAppearance">@style/TextAppearance.ToolbarTitle</item>
-        <item name="android:background">@android:color/white</item>
         <item name="android:foreground">@color/colorPrimary</item>
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:textAppearance">@style/TextAppearance.ToolbarTitle</item>
-        <item name="android:colorBackground">@android:color/white</item>
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
@@ -61,23 +57,12 @@
         <item name="android:fontFamily">@font/google_sans</item>
     </style>
 
-    <style name="SignInTheme" parent="Theme.AppCompat.Light">
-        <!-- Required for sign-in flow styling -->
-        <item name="colorPrimary">@android:color/white</item>
-        <item name="colorPrimaryDark">@android:color/white</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textViewStyle">@style/TextAppearance.Default</item>
-        <item name="android:windowBackground">@android:color/white</item>
-        <item name="android:statusBarColor">@android:color/white</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-        <item name="android:navigationBarColor">@color/colorPrimary</item>
+    <style name="SignInTheme" parent="AppTheme">
         <item name="android:buttonStyle">@style/SignInButton</item>
-        <item name="android:toolbarStyle">@style/Widget.Toolbar</item>
-        <item name="android:actionBarStyle">@style/Widget.AppBar</item>
     </style>
 
     <style name="SignInButton" parent="FirebaseUI.Button">
-        <item name="android:backgroundTint">@color/colorPrimary</item>
+        <item name="android:backgroundTint">@color/headblue_0</item>
     </style>
 
 </resources>

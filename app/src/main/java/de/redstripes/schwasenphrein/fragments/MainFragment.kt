@@ -72,20 +72,6 @@ class MainFragment : Fragment() {
         recyclerView?.adapter = adapter
     }
 
-    /*override fun onStart() {
-        super.onStart()
-        if (adapter != null) {
-            adapter?.startListening()
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        if (adapter != null) {
-            adapter?.stopListening()
-        }
-    }*/
-
     private inline fun consume(f: () -> Unit): Boolean {
         f()
         return true

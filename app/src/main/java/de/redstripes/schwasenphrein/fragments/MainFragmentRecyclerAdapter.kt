@@ -15,7 +15,6 @@ import de.redstripes.schwasenphrein.viewholder.PostViewHolder
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
 
-
 class MainFragmentRecyclerAdapter(options: FirebaseRecyclerOptions<Post>, val context: Context, private val database: DatabaseReference) : FirebaseRecyclerAdapter<Post, PostViewHolder>(options), AnkoLogger {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
@@ -26,21 +25,14 @@ class MainFragmentRecyclerAdapter(options: FirebaseRecyclerOptions<Post>, val co
     override fun onBindViewHolder(viewHolder: PostViewHolder, position: Int, model: Post) {
         val postRef = getRef(position)
 
-        // Set click listener for the whole post view
-        /*val postKey = postRef.key
-        viewHolder.itemView.setOnClickListener {
-            val intent = Intent(context, PostDetailActivity::class.java)
-            intent.putExtra(PostDetailActivity.EXTRA_POST_KEY, postKey)
-            startActivity(intent)
-        };*/
-
         // Determine if the current user has liked this post and set UI accordingly
-        val star: Drawable? = if (model.stars.containsKey(getUid())) {
-            context.getDrawable(R.drawable.ic_star_pink_24dp)
+        val star: Drawable = if (model.stars.containsKey(getUid())) {
+            viewHolder.itemView.context.getDrawable(R.drawable.ic_star_pink_24dp)
         } else {
-            context.getDrawable(R.drawable.ic_star_border_pink_24dp)
+            viewHolder.itemView.context.getDrawable(R.drawable.ic_star_border_pink_24dp)
         }
-        viewHolder.numStarsView.setCompoundDrawables(star, null, null, null)
+
+        viewHolder.numStarsView.setCompoundDrawablesWithIntrinsicBounds(star, null, null, null)
 
         // Bind Post to ViewHolder, setting OnClickListener for the star button
         viewHolder.bindToPost(model, View.OnClickListener {
@@ -50,13 +42,8 @@ class MainFragmentRecyclerAdapter(options: FirebaseRecyclerOptions<Post>, val co
             if (key == null || uid == null)
                 return@OnClickListener
 
-            // Need to write to both places the post is stored
             val globalPostRef = database.child("posts").child(key)
-            val userPostRef = database.child("user-posts").child(uid).child(key)
-
-            // Run two transactions
             onStarClicked(globalPostRef)
-            onStarClicked(userPostRef)
         })
     }
 
@@ -83,7 +70,8 @@ class MainFragmentRecyclerAdapter(options: FirebaseRecyclerOptions<Post>, val co
 
             override fun onComplete(databaseError: DatabaseError?, b: Boolean, dataSnapshot: DataSnapshot?) {
                 // Transaction completed
-                debug("postTransaction:onComplete:" + databaseError!!)
+                if (!b)
+                    debug("postTransaction:onComplete:$databaseError")
             }
         })
     }

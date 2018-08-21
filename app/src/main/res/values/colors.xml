@@ -1,42 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="pink_face">#f8bbd0</color> <!-- pink 100 -->
-    <color name="pink_ears">#f48fb1</color> <!-- pink 200 -->
-    <color name="pink_mouth">#f06292</color> <!-- pink 300 -->
+    <color name="white">#ffffff</color>
+
+    <color name="pink_100">#f8bbd0</color>
+    <color name="pink_200">#f48fb1</color>
+    <color name="pink_300">#f06292</color>
+    <color name="pink_a400">#f50057</color>
 
     <color name="headblue_0">#001238</color>
     <color name="headblue_1">#334160</color>
     <color name="headblue_2">#667188</color>
 
-    <color name="colorPrimary">@color/headblue_1</color>
-    <color name="colorPrimaryDark">@color/headblue_0</color>
-    <color name="colorPrimaryLight">@color/headblue_2</color>
+    <color name="bluegray_50">#eceff1</color>
+    <color name="bluegrey_200">#b0bec5</color>
+
+    <color name="colorPrimary">@color/bluegray_50</color>
+    <color name="colorPrimaryDark">@color/bluegrey_200</color>
+    <color name="colorPrimaryLight">@color/white</color>
     <color name="colorAccent">#f50057</color> <!-- pink A400 -->
     <!-- <color name="colorAccent">@color/pink_ears</color> -->
     <!--<color name="colorAccent">#ff3c00</color>-->
     <!--<color name="colorAccentDark">#c30000</color>-->
     <!--<color name="colorAccentLight">#ff6a38</color>-->
-    <color name="colorPrimaryText">#ffffff</color>
-    <color name="colorAccentText">#ffffff</color>
+    <color name="colorPrimaryText">@color/white</color>
+    <color name="colorAccentText">@color/white</color>
 
     <color name="tab_text">#000</color>
 
-    <color name="material_green">#c8e6c9</color> <!-- green 100 -->
-    <color name="material_green_dark">#388e3c</color> <!-- green 700 -->
-    <color name="material_orange">#ffe0b2</color> <!-- orange 100 -->
-    <color name="material_orange_dark">#f57c00</color> <!-- orange 700 -->
-    <color name="material_yellow">#fff9c4</color> <!-- yellow 100 -->
-    <color name="material_yellow_dark">#fbc02d</color> <!-- yellow 700 -->
-    <color name="material_red">#ffcdd2</color><!-- red 100 -->
-    <color name="material_red_dark">#d32f2f</color><!-- red 700 -->
-    <color name="material_blue">#b2dfdb</color> <!-- teal 100 -->
-    <color name="material_blue_dark">#00796b</color> <!-- teal 700 -->
+    <color name="green_100">#c8e6c9</color>
+    <color name="green_700">#388e3c</color>
+    <color name="orange_100">#ffe0b2</color>
+    <color name="orange_700">#f57c00</color>
+    <color name="yellow_100">#fff9c4</color>
+    <color name="yellow_700">#fbc02d</color>
+    <color name="red_100">#ffcdd2</color>
+    <color name="red_700">#d32f2f</color>
+    <color name="blue_100">#b2dfdb</color>
+    <color name="blue_700">#00796b</color>
 
-    <color name="text_color_primary">#ffffff</color>
+    <color name="text_color_primary">@color/white</color>
 
     <integer-array name="swipe_refresh">
-        <item>@color/pink_face</item>
-        <item>@color/pink_ears</item>
-        <item>@color/pink_mouth</item>
+        <item>@color/pink_100</item>
+        <item>@color/pink_200</item>
+        <item>@color/pink_300</item>
     </integer-array>
 </resources>

@@ -7,22 +7,15 @@
     android:layout_height="match_parent"
     tools:context=".fragments.MainFragment">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/main_coordinator"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/main_posts"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/main_posts"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:clipToPadding="false"
-            android:padding="@dimen/margin_small"
-            android:scrollbars="vertical"
-            tools:listitem="@layout/item_post" />
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:clipToPadding="false"
+        android:padding="@dimen/margin_small"
+        android:scrollbars="vertical"
+        tools:listitem="@layout/item_post" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/main_fab_add_post"
@@ -33,6 +26,5 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="@dimen/margin_normal"
         android:layout_marginBottom="@dimen/margin_normal"
-        android:backgroundTint="@color/colorPrimary"
         app:srcCompat="@drawable/ic_add_white_24dp" />
 </RelativeLayout>

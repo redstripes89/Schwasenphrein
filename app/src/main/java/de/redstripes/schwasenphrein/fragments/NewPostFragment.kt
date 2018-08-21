@@ -49,14 +49,14 @@ class NewPostFragment : DialogFragment(), AnkoLogger {
 
                     if(user == null) {
                         Toast.makeText(activity, "Error: Could not get user", Toast.LENGTH_SHORT).show()
-                        error("User " + uid + " is unexpectedly null")
+                        error("User $uid is unexpectedly null")
                     } else {
                         val key = database.child("posts").push().key
                         val post = Post(uid, user.username!!, person, text)
                         val postValues = post.toMap()
 
                         val childUpdates = HashMap<String, Any>()
-                        childUpdates.put("/posts/" + key, postValues)
+                        childUpdates.put("/posts/$key", postValues)
                         database.updateChildren(childUpdates)
                     }
 
