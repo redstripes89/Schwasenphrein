@@ -9,13 +9,14 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import de.redstripes.schwasenphrein.MainActivity
 import de.redstripes.schwasenphrein.R
 import de.redstripes.schwasenphrein.models.Post
 import de.redstripes.schwasenphrein.viewholder.PostViewHolder
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
 
-class MainFragmentRecyclerAdapter(options: FirebaseRecyclerOptions<Post>, val context: Context, private val database: DatabaseReference) : FirebaseRecyclerAdapter<Post, PostViewHolder>(options), AnkoLogger {
+class MainFragmentRecyclerAdapter(options: FirebaseRecyclerOptions<Post>, val context: Context, private val database: DatabaseReference, private val onStarClicked: (DatabaseReference) -> Unit) : FirebaseRecyclerAdapter<Post, PostViewHolder>(options), AnkoLogger {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -48,20 +49,34 @@ class MainFragmentRecyclerAdapter(options: FirebaseRecyclerOptions<Post>, val co
         })
     }
 
-    private fun onStarClicked(postRef: DatabaseReference) {
+    /*private fun onStarClicked(postRef: DatabaseReference) {
         postRef.runTransaction(object : Transaction.Handler {
             override fun doTransaction(mutableData: MutableData): Transaction.Result {
                 val p = mutableData.getValue(Post::class.java)
                         ?: return Transaction.success(mutableData)
 
+                AppRatingDialog.Builder()
+                        .setPositiveButtonText("OK")
+                        .setNegativeButtonText("Cancel")
+                        .setCancelable(true)
+                        .setCanceledOnTouchOutside(true)
+                        .setDefaultRating(0)
+                        .setDescription("Please rate this joke")
+                        .setCommentInputEnabled(false)
+                        .setStarColor(R.color.pink_a400)
+                        .setTitleTextColor(R.color.headblue_0)
+                        .setTitle("My Rating")
+                        .create(MainActivity.this)
+                        .show()
+
                 if (p.stars.containsKey(getUid())) {
                     // Unstar the post and remove self from stars
-                    p.starCount = p.starCount - 1
                     p.stars.remove(getUid())
+                    p.starCount = p.stars.values.average()
                 } else {
                     // Star the post and add self to stars
-                    p.starCount = p.starCount + 1
-                    p.stars[getUid()] = true
+                    p.stars[getUid()] = 1
+                    p.starCount = p.stars.values.average()
                 }
 
                 // Set value and report transaction success
@@ -75,7 +90,7 @@ class MainFragmentRecyclerAdapter(options: FirebaseRecyclerOptions<Post>, val co
                     debug("postTransaction:onComplete:$databaseError")
             }
         })
-    }
+    }*/
 
     fun getUid() = FirebaseAuth.getInstance().currentUser!!.uid
 }

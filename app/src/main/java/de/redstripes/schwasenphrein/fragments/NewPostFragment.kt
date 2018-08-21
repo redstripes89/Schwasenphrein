@@ -15,10 +15,13 @@ import kotlinx.android.synthetic.main.fragment_new_post.*
 import kotlinx.android.synthetic.main.fragment_new_post.view.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import de.redstripes.schwasenphrein.helpers.Helper
 import de.redstripes.schwasenphrein.models.Post
 import de.redstripes.schwasenphrein.viewholder.PostViewHolder
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.warn
+import org.threeten.bp.LocalDateTime
+import java.util.*
 import kotlin.math.roundToInt
 
 
@@ -56,9 +59,8 @@ class NewPostFragment : DialogFragment(), AnkoLogger {
                     } else {
                         val key = database.child("posts").push().key
                         val colorIndex = (Math.random() * (PostViewHolder.background_colors.size - 1)).roundToInt()
-                        val post = Post(uid, person, text, colorIndex)
+                        val post = Post(uid, person, text, Helper.dateToString(LocalDateTime.now()),colorIndex)
                         val postValues = post.toMap()
-
                         val childUpdates = HashMap<String, Any>()
                         childUpdates["/posts/$key"] = postValues
                         database.updateChildren(childUpdates)

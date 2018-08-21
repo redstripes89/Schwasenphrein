@@ -56,6 +56,11 @@ dependencies {
     implementation "org.jetbrains.anko:anko:$anko_version"
     implementation "org.jetbrains.anko:anko-design:$anko_version"
 
+    // java.time backport
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.1.0'
+    // stepstone rating bar
+    implementation 'com.github.rubygarage:emotion-rating-view:v1.0.0'
+
     // Testing
     implementation 'androidx.legacy:legacy-support-v4:1.0.0-rc01'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'

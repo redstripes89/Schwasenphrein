@@ -45,4 +45,6 @@
         <item>@color/pink_200</item>
         <item>@color/pink_300</item>
     </integer-array>
+
+    <color name="colorTranslucentBlack">#0A000000</color>
 </resources>
