@@ -14,8 +14,8 @@ class Post {
     var text: String? = null
     var colorIndex: Int? = null
     var date: String? = null
-    var starCount = 0.0
-    var stars: HashMap<String, Int> = HashMap()
+    var starCount = 0f
+    var stars: MutableMap<String, Float> = HashMap()
 
     constructor() {
         // Default constructor required for calls to DataSnapshot.getValue(Post.class)

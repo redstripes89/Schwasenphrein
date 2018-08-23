@@ -18,8 +18,10 @@ import de.redstripes.schwasenphrein.models.Post
 import de.redstripes.schwasenphrein.viewholder.PostViewHolder
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import kotlinx.android.synthetic.main.fragment_rating.view.*
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.debug
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), AnkoLogger {
 
     companion object {
         @JvmStatic
@@ -76,52 +78,42 @@ class MainFragment : Fragment() {
         recyclerView?.adapter = adapter
     }
 
-    private fun onStarClicked(postRef: DatabaseReference) {
+    private fun onStarClicked(postRef: DatabaseReference, userRating: Float) {
 
-        postRef.runTransaction(object : Transaction.Handler {
-            override fun doTransaction(mutableData: MutableData): Transaction.Result {
-                val p = mutableData.getValue(Post::class.java)
-                        ?: return Transaction.success(mutableData)
+        var rating = userRating
+        val view = layoutInflater.inflate(R.layout.fragment_rating, null)
+        view.rating_bar.rating = rating
 
-                val view = layoutInflater.inflate(R.layout.fragment_rating, null)
+        AlertDialog.Builder(requireContext())
+                .setMessage("My Rating")
+                .setView(view)
+                .setCancelable(true)
+                .setPositiveButton("OK") { _, _ ->
+                    rating = view.rating_bar.rating
 
-                view.ratingView.setRatingChangeListener { previousRating, newRating ->
-                    view.emotionView.setRating(previousRating, newRating)
-                    view.gradientBackgroundView.changeBackground(previousRating, newRating)
+                    postRef.runTransaction(object : Transaction.Handler {
+                        override fun doTransaction(mutableData: MutableData): Transaction.Result {
+                            val p = mutableData.getValue(Post::class.java)
+                                    ?: return Transaction.success(mutableData)
+
+                            p.stars[getUid()] = rating
+                            p.starCount = p.stars.values.average().toFloat()
+
+                            // Set value and report transaction success
+                            mutableData.value = p
+                            return Transaction.success(mutableData)
+                        }
+
+                        override fun onComplete(databaseError: DatabaseError?, b: Boolean, dataSnapshot: DataSnapshot?) {
+                            // Transaction completed
+                            if (!b)
+                                debug("postTransaction:onComplete:$databaseError")
+                        }
+                    })
                 }
-
-                activity?.runOnUiThread {
-                    AlertDialog.Builder(requireContext())
-                            .setMessage("My Rating")
-                            .setView(view)
-                            .setCancelable(true)
-                            .setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which -> })
-                            .setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which -> })
-                            .create()
-                            .show()
-                }
-
-                if (p.stars.containsKey(getUid())) {
-                    // Unstar the post and remove self from stars
-                    p.stars.remove(getUid())
-                    p.starCount = p.stars.values.average()
-                } else {
-                    // Star the post and add self to stars
-                    p.stars[getUid()] = 1
-                    p.starCount = p.stars.values.average()
-                }
-
-                // Set value and report transaction success
-                mutableData.value = p
-                return Transaction.success(mutableData)
-            }
-
-            override fun onComplete(databaseError: DatabaseError?, b: Boolean, dataSnapshot: DataSnapshot?) {
-                // Transaction completed
-                //if (!b)
-                //debug("postTransaction:onComplete:$databaseError")
-            }
-        })
+                .setNegativeButton("Cancel") { _, _ -> }
+                .create()
+                .show()
     }
 
     fun getUid() = FirebaseAuth.getInstance().currentUser!!.uid

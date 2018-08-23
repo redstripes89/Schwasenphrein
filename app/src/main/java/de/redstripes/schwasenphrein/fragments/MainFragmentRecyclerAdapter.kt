@@ -8,15 +8,12 @@ import android.view.ViewGroup
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
-import de.redstripes.schwasenphrein.MainActivity
+import com.google.firebase.database.DatabaseReference
 import de.redstripes.schwasenphrein.R
 import de.redstripes.schwasenphrein.models.Post
 import de.redstripes.schwasenphrein.viewholder.PostViewHolder
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.debug
 
-class MainFragmentRecyclerAdapter(options: FirebaseRecyclerOptions<Post>, val context: Context, private val database: DatabaseReference, private val onStarClicked: (DatabaseReference) -> Unit) : FirebaseRecyclerAdapter<Post, PostViewHolder>(options), AnkoLogger {
+class MainFragmentRecyclerAdapter(options: FirebaseRecyclerOptions<Post>, val context: Context, private val database: DatabaseReference, private val onStarClicked: (DatabaseReference, Float) -> Unit) : FirebaseRecyclerAdapter<Post, PostViewHolder>(options) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -40,57 +37,17 @@ class MainFragmentRecyclerAdapter(options: FirebaseRecyclerOptions<Post>, val co
         viewHolder.bindToPost(model, View.OnClickListener {
             val key = postRef.key
             val uid = model.uid
+            var userRating = 0f
+            if (model.stars.containsKey(getUid()))
+                userRating = model.stars[getUid()] ?: 0f
 
             if (key == null || uid == null)
                 return@OnClickListener
 
             val globalPostRef = database.child("posts").child(key)
-            onStarClicked(globalPostRef)
+            onStarClicked(globalPostRef, userRating)
         })
     }
 
-    /*private fun onStarClicked(postRef: DatabaseReference) {
-        postRef.runTransaction(object : Transaction.Handler {
-            override fun doTransaction(mutableData: MutableData): Transaction.Result {
-                val p = mutableData.getValue(Post::class.java)
-                        ?: return Transaction.success(mutableData)
-
-                AppRatingDialog.Builder()
-                        .setPositiveButtonText("OK")
-                        .setNegativeButtonText("Cancel")
-                        .setCancelable(true)
-                        .setCanceledOnTouchOutside(true)
-                        .setDefaultRating(0)
-                        .setDescription("Please rate this joke")
-                        .setCommentInputEnabled(false)
-                        .setStarColor(R.color.pink_a400)
-                        .setTitleTextColor(R.color.headblue_0)
-                        .setTitle("My Rating")
-                        .create(MainActivity.this)
-                        .show()
-
-                if (p.stars.containsKey(getUid())) {
-                    // Unstar the post and remove self from stars
-                    p.stars.remove(getUid())
-                    p.starCount = p.stars.values.average()
-                } else {
-                    // Star the post and add self to stars
-                    p.stars[getUid()] = 1
-                    p.starCount = p.stars.values.average()
-                }
-
-                // Set value and report transaction success
-                mutableData.value = p
-                return Transaction.success(mutableData)
-            }
-
-            override fun onComplete(databaseError: DatabaseError?, b: Boolean, dataSnapshot: DataSnapshot?) {
-                // Transaction completed
-                if (!b)
-                    debug("postTransaction:onComplete:$databaseError")
-            }
-        })
-    }*/
-
-    fun getUid() = FirebaseAuth.getInstance().currentUser!!.uid
+    private fun getUid() = FirebaseAuth.getInstance().currentUser!!.uid
 }

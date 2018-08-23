@@ -11,6 +11,11 @@ import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import de.redstripes.schwasenphrein.models.User
 import kotlinx.android.synthetic.main.activity_startup.*
 import org.jetbrains.anko.AnkoLogger
 import java.util.*
@@ -51,6 +56,11 @@ class StartupActivity : AppCompatActivity(), AnkoLogger {
             responseCodeSignIn -> {
                 val response = IdpResponse.fromResultIntent(data)
                 if (resultCode == Activity.RESULT_OK) {
+                    if(response?.isNewUser == true) {
+                        val firebaseUser = FirebaseAuth.getInstance().currentUser
+                        val user = User(firebaseUser?.displayName)
+                        FirebaseDatabase.getInstance().reference.child("users").child(firebaseUser!!.uid).setValue(user)
+                    }
                     moveToMainActivity(response)
                 } else {
                     if (response == null) {

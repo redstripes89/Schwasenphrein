@@ -58,8 +58,8 @@ dependencies {
 
     // java.time backport
     implementation 'com.jakewharton.threetenabp:threetenabp:1.1.0'
-    // stepstone rating bar
-    implementation 'com.github.rubygarage:emotion-rating-view:v1.0.0'
+    // MaterialRatingBar
+    implementation 'me.zhanghai.android.materialratingbar:library:1.3.1'
 
     // Testing
     implementation 'androidx.legacy:legacy-support-v4:1.0.0-rc01'

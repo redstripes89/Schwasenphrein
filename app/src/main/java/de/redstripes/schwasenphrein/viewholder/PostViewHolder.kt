@@ -2,6 +2,7 @@ package de.redstripes.schwasenphrein.viewholder
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
