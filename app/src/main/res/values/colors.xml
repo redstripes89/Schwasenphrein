@@ -27,16 +27,21 @@
 
     <color name="tab_text">#000</color>
 
-    <color name="green_100">#c8e6c9</color>
-    <color name="green_700">#388e3c</color>
-    <color name="orange_100">#ffe0b2</color>
-    <color name="orange_700">#f57c00</color>
-    <color name="yellow_100">#fff9c4</color>
-    <color name="yellow_700">#fbc02d</color>
-    <color name="red_100">#ffcdd2</color>
-    <color name="red_700">#d32f2f</color>
-    <color name="blue_100">#b2dfdb</color>
-    <color name="blue_700">#00796b</color>
+    <color name="google_red100">#ffcdd2</color>
+    <color name="google_yellow100">#fff9c4</color>
+    <color name="google_purple100">#e1bee7</color>
+    <color name="google_orange100">#ffe0b2</color>
+    <color name="google_green100">#c8e6c9</color>
+    <color name="google_cyan100">#B2EBF2</color>
+
+    <color name="google_red900">#B71C1C</color>
+    <color name="google_yellow900">#F57F17</color>
+    <color name="google_purple900">#4A148C</color>
+    <color name="google_orange900">#E65100</color>
+    <color name="google_green900">#1B5E20</color>
+    <color name="google_cyan900">#006064</color>
+
+    <color name="google_grey200">#EEEEEE</color>
 
     <color name="text_color_primary">@color/white</color>
 

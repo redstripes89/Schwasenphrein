@@ -26,4 +26,21 @@
         <item>Thomas</item>
         <item>Tobi</item>
     </string-array>
+
+    <array name="letter_tile_colors">
+        <item>@color/google_red100</item>
+        <item>@color/google_yellow100</item>
+        <item>@color/google_purple100</item>
+        <item>@color/google_orange100</item>
+        <item>@color/google_green100</item>
+        <item>@color/google_cyan100</item>
+    </array>
+    <array name="letter_tile_colors_dark">
+        <item>@color/google_red900</item>
+        <item>@color/google_yellow900</item>
+        <item>@color/google_purple900</item>
+        <item>@color/google_orange900</item>
+        <item>@color/google_green900</item>
+        <item>@color/google_cyan900</item>
+    </array>
 </resources>

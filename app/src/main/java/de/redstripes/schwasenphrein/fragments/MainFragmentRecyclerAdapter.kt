@@ -1,7 +1,6 @@
 package de.redstripes.schwasenphrein.fragments
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,28 +12,18 @@ import de.redstripes.schwasenphrein.R
 import de.redstripes.schwasenphrein.models.Post
 import de.redstripes.schwasenphrein.viewholder.PostViewHolder
 
-class MainFragmentRecyclerAdapter(options: FirebaseRecyclerOptions<Post>, val context: Context, private val database: DatabaseReference, private val onStarClicked: (DatabaseReference, Float) -> Unit) : FirebaseRecyclerAdapter<Post, PostViewHolder>(options) {
+class MainFragmentRecyclerAdapter(options: FirebaseRecyclerOptions<Post>, private val context: Context, private val database: DatabaseReference, private val onStarClicked: (DatabaseReference, Float) -> Unit) : FirebaseRecyclerAdapter<Post, PostViewHolder>(options) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return PostViewHolder(inflater.inflate(R.layout.item_post, parent, false))
+        return PostViewHolder(inflater.inflate(R.layout.item_post, parent, false), context.resources.obtainTypedArray(R.array.letter_tile_colors), context.resources.obtainTypedArray(R.array.letter_tile_colors_dark))
     }
 
     override fun onBindViewHolder(viewHolder: PostViewHolder, position: Int, model: Post) {
         val postRef = getRef(position)
 
-        // Determine if the current user has liked this post and set UI accordingly
-        val star: Drawable = if (model.stars.containsKey(getUid())) {
-            viewHolder.itemView.context.getDrawable(R.drawable.ic_star_pink_24dp)
-        } else {
-            viewHolder.itemView.context.getDrawable(R.drawable.ic_star_border_pink_24dp)
-        }
-
-        viewHolder.numStarsView.setCompoundDrawablesWithIntrinsicBounds(star, null, null, null)
-
-
         // Bind Post to ViewHolder, setting OnClickListener for the star button
-        viewHolder.bindToPost(model, View.OnClickListener {
+        viewHolder.bindToPost(model, getUid(), View.OnClickListener {
             val key = postRef.key
             val uid = model.uid
             var userRating = 0f

@@ -58,8 +58,7 @@ class NewPostFragment : DialogFragment(), AnkoLogger {
                         error("User $uid is unexpectedly null")
                     } else {
                         val key = database.child("posts").push().key
-                        val colorIndex = (Math.random() * (PostViewHolder.background_colors.size - 1)).roundToInt()
-                        val post = Post(uid, person, text, Helper.dateToString(LocalDateTime.now()),colorIndex)
+                        val post = Post(uid, person, text, Helper.dateToString(LocalDateTime.now()))
                         val postValues = post.toMap()
                         val childUpdates = HashMap<String, Any>()
                         childUpdates["/posts/$key"] = postValues

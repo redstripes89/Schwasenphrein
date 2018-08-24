@@ -12,7 +12,6 @@ class Post {
     var uid: String? = null
     var person: String? = null
     var text: String? = null
-    var colorIndex: Int? = null
     var date: String? = null
     var starCount = 0f
     var stars: MutableMap<String, Float> = HashMap()
@@ -21,12 +20,11 @@ class Post {
         // Default constructor required for calls to DataSnapshot.getValue(Post.class)
     }
 
-    constructor(uid: String, person: String, text: String, date: String, colorIndex: Int) {
+    constructor(uid: String, person: String, text: String, date: String) {
         this.uid = uid
         this.person = person
         this.text = text
         this.date = date
-        this.colorIndex = colorIndex
     }
 
     @Exclude
@@ -35,7 +33,6 @@ class Post {
         result["uid"] = uid.orEmpty()
         result["person"] = person.orEmpty()
         result["text"] = text.orEmpty()
-        result["colorIndex"] = colorIndex ?: 0
         result["date"] =  date.orEmpty()
         result["starCount"] = starCount
         result["stars"] = stars
