@@ -1,6 +1,5 @@
 package de.redstripes.schwasenphrein.fragments
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AlertDialog
@@ -12,7 +11,6 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import de.redstripes.schwasenphrein.MainActivity
 import de.redstripes.schwasenphrein.R
 import de.redstripes.schwasenphrein.models.Post
 import de.redstripes.schwasenphrein.viewholder.PostViewHolder
@@ -48,9 +46,9 @@ class MainFragment : Fragment(), AnkoLogger {
 
         rootView.main_fab_add_post.setOnClickListener {
             val newPostFragment = NewPostFragment()
-            val transaction = childFragmentManager?.beginTransaction()
-            transaction?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            transaction?.add(R.id.main_container, newPostFragment)?.addToBackStack(null)?.commit()
+            val transaction = childFragmentManager.beginTransaction()
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            transaction.add(R.id.main_container, newPostFragment).addToBackStack(null).commit()
         }
 
         return rootView
@@ -79,7 +77,6 @@ class MainFragment : Fragment(), AnkoLogger {
     }
 
     private fun onStarClicked(postRef: DatabaseReference, userRating: Float) {
-
         var rating = userRating
         val view = layoutInflater.inflate(R.layout.fragment_rating, null)
         view.rating_bar.rating = rating
@@ -117,9 +114,4 @@ class MainFragment : Fragment(), AnkoLogger {
     }
 
     fun getUid() = FirebaseAuth.getInstance().currentUser!!.uid
-
-    private inline fun consume(f: () -> Unit): Boolean {
-        f()
-        return true
-    }
 }

@@ -36,16 +36,16 @@ class NewPostFragment : DialogFragment(), AnkoLogger {
             val text = new_post_text.text.toString()
 
             if (TextUtils.isEmpty(person)) {
-                new_post_person.error = "Required"
+                new_post_person.error = getString(R.string.label_required)
             }
 
             if (TextUtils.isEmpty(text)) {
-                new_post_text.error = "Required"
+                new_post_text.error = getString(R.string.label_required)
                 return@setOnClickListener
             }
 
             setEditingEnabled(false)
-            Toast.makeText(activity, "Posting...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, getString(R.string.status_posting), Toast.LENGTH_SHORT).show()
 
             val uid = getUid()
             val database = FirebaseDatabase.getInstance().reference
@@ -54,7 +54,7 @@ class NewPostFragment : DialogFragment(), AnkoLogger {
                     val user = dataSnapshot.getValue<de.redstripes.schwasenphrein.models.User>(de.redstripes.schwasenphrein.models.User::class.java)
 
                     if (user == null) {
-                        Toast.makeText(activity, "Error: Could not get user", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, getString(R.string.error_could_not_get_user), Toast.LENGTH_SHORT).show()
                         error("User $uid is unexpectedly null")
                     } else {
                         val key = database.child("posts").push().key
@@ -82,7 +82,7 @@ class NewPostFragment : DialogFragment(), AnkoLogger {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, resources.getStringArray(R.array.autocomplete_persons)).also { new_post_person.setAdapter(it) }
+        ArrayAdapter<String>(requireContext(), android.R.layout.simple_list_item_1, resources.getStringArray(R.array.autocomplete_persons)).also { new_post_person.setAdapter(it) }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -26,6 +27,13 @@ class MainFragmentRecyclerAdapter(options: FirebaseRecyclerOptions<Post>, privat
         viewHolder.bindToPost(model, getUid(), View.OnClickListener {
             val key = postRef.key
             val uid = model.uid
+            val username = getUserName()
+
+            if (model.person == username) {
+                Toast.makeText(context, context.getString(R.string.info_cannot_rate_own_post), Toast.LENGTH_SHORT).show()
+                return@OnClickListener
+            }
+
             var userRating = 0f
             if (model.stars.containsKey(getUid()))
                 userRating = model.stars[getUid()] ?: 0f
@@ -38,5 +46,6 @@ class MainFragmentRecyclerAdapter(options: FirebaseRecyclerOptions<Post>, privat
         })
     }
 
+    private fun getUserName() = FirebaseAuth.getInstance().currentUser!!.displayName
     private fun getUid() = FirebaseAuth.getInstance().currentUser!!.uid
 }

@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_large"
             android:adjustViewBounds="true"
-            android:contentDescription="Schwasenphrein Logo"
+            android:contentDescription="@string/app_name"
             android:scaleType="fitCenter"
             android:src="@drawable/icon_pig" />
 
@@ -58,7 +58,7 @@
             android:layout_below="@+id/startup_image_pig"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:text="Tap the pig to start" />
+            android:text="@string/label_tap_pig_to_start" />
     </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

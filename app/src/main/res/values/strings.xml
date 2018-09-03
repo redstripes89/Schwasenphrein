@@ -1,23 +1,15 @@
 <resources>
-    <string name="app_name">Schwasenphrein</string>
-
-    <string name="transition_login_btn">Login_Button</string>
-    <string name="transition_login_mail">Login_Mail</string>
-    <string name="transition_login_password">Login_Password</string>
-
-    <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name" translatable="false">Schwasenphrein</string>
+    <string name="label_required">Required</string>
+    <string name="status_posting">Posting…</string>
+    <string name="error_could_not_get_user">Error: Could not get user</string>
+    <string name="status_signin_cancelled">Sign In was cancelled</string>
+    <string name="status_no_internet">No internet connection</string>
+    <string name="status_unknown_error">Unknown error</string>
+    <string name="label_tap_pig_to_start">Tap the pig to start</string>
+    <string name="title_new_post">New Post</string>
+    <string name="cmd_add">Add</string>
+    <string name="label_person">Person</string>
+    <string name="label_text">Text</string>
+    <string name="info_cannot_rate_own_post">You can not rate your own post</string>
 </resources>

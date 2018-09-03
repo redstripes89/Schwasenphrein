@@ -6,6 +6,7 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
@@ -31,10 +32,10 @@ class PostViewHolder(itemView: View, private val letterTitleColors: TypedArray, 
         iconView.setColorFilter(getBackgroundColor(post.person), PorterDuff.Mode.SRC_IN)
 
         if (post.stars.containsKey(uid)) {
-            numStarsView.text = "${post.starCount} (${post.stars[uid]})"
+            numStarsView.text = "${Math.round(post.starCount * 100.0) / 100.0} (${post.stars[uid]})"
             numStarsView.setCompoundDrawablesWithIntrinsicBounds(itemView.context.getDrawable(R.drawable.ic_star_pink_24dp), null, null, null)
         } else {
-            numStarsView.text = post.starCount.toString()
+            numStarsView.text = "${Math.round(post.starCount * 100.0) / 100.0}"
             numStarsView.setCompoundDrawablesWithIntrinsicBounds(itemView.context.getDrawable(R.drawable.ic_star_border_pink_24dp), null, null, null)
         }
 
@@ -42,17 +43,17 @@ class PostViewHolder(itemView: View, private val letterTitleColors: TypedArray, 
     }
 
     private fun getForegroundColor(name: String?): Int {
-        return if(TextUtils.isEmpty(name)) {
+        return if (TextUtils.isEmpty(name)) {
             ContextCompat.getColor(itemView.context, R.color.google_grey200)
-        }else {
+        } else {
             letterTitleColorsDark.getColor(Math.abs(name!!.hashCode()) % letterTitleColorsDark.length(), ContextCompat.getColor(itemView.context, R.color.google_grey200))
         }
     }
 
     private fun getBackgroundColor(name: String?): Int {
-        return if(TextUtils.isEmpty(name)) {
+        return if (TextUtils.isEmpty(name)) {
             ContextCompat.getColor(itemView.context, R.color.google_grey200)
-        }else {
+        } else {
             letterTitleColors.getColor(Math.abs(name!!.hashCode()) % letterTitleColors.length(), ContextCompat.getColor(itemView.context, R.color.google_grey200))
         }
     }

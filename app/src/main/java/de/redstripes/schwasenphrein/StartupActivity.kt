@@ -64,16 +64,16 @@ class StartupActivity : AppCompatActivity(), AnkoLogger {
                     moveToMainActivity(response)
                 } else {
                     if (response == null) {
-                        Snackbar.make(startup_root, "Sign In was cancelled", Toast.LENGTH_SHORT)
+                        Snackbar.make(startup_root, getString(R.string.status_signin_cancelled), Toast.LENGTH_SHORT)
                         return
                     }
 
                     if (response.error?.errorCode == ErrorCodes.NO_NETWORK) {
-                        Snackbar.make(startup_root, "No internet connection", Toast.LENGTH_SHORT)
+                        Snackbar.make(startup_root, getString(R.string.status_no_internet), Toast.LENGTH_SHORT)
                         return
                     }
 
-                    Snackbar.make(startup_root, "Unknown error", Toast.LENGTH_SHORT)
+                    Snackbar.make(startup_root, getString(R.string.status_unknown_error), Toast.LENGTH_SHORT)
                     error("Sign In error: " + response.error)
                 }
             }

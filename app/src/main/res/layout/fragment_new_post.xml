@@ -35,7 +35,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="New Post" />
+                android:text="@string/title_new_post" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/new_post_btn_add"
@@ -45,7 +45,7 @@
                 android:gravity="center"
                 android:paddingLeft="@dimen/margin_small"
                 android:paddingRight="@dimen/margin_small"
-                android:text="Add" />
+                android:text="@string/cmd_add" />
 
         </LinearLayout>
 
@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center_vertical"
-                android:hint="Person"
+                android:hint="@string/label_person"
                 android:inputType="textAutoComplete"
                 tools:ignore="Autofill" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -82,7 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center_vertical"
-                android:hint="Text"
+                android:hint="@string/label_text"
                 android:minLines="6"
                 android:lines="8"
                 android:maxLines="10"
