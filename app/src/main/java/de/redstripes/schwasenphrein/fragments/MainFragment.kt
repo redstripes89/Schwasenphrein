@@ -26,6 +26,7 @@ class MainFragment : Fragment(), AnkoLogger {
         fun newInstance() = MainFragment()
     }
 
+    private var parent: ViewGroup? = null
     private var database: DatabaseReference? = null
     private var recyclerView: RecyclerView? = null
     private var adapter: FirebaseRecyclerAdapter<Post, PostViewHolder>? = null
@@ -37,7 +38,8 @@ class MainFragment : Fragment(), AnkoLogger {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        val rootView = inflater.inflate(R.layout.fragment_main, container, false)
+        parent = container
+        val rootView = inflater.inflate(R.layout.fragment_main, parent, false)
 
         database = FirebaseDatabase.getInstance().reference
 
@@ -78,14 +80,14 @@ class MainFragment : Fragment(), AnkoLogger {
 
     private fun onStarClicked(postRef: DatabaseReference, userRating: Float) {
         var rating = userRating
-        val view = layoutInflater.inflate(R.layout.fragment_rating, null)
+        val view = layoutInflater.inflate(R.layout.fragment_rating, parent, false)
         view.rating_bar.rating = rating
 
         AlertDialog.Builder(requireContext())
-                .setMessage("My Rating")
+                .setMessage(getString(R.string.title_my_rating))
                 .setView(view)
                 .setCancelable(true)
-                .setPositiveButton("OK") { _, _ ->
+                .setPositiveButton(getString(R.string.cmd_ok)) { _, _ ->
                     rating = view.rating_bar.rating
 
                     postRef.runTransaction(object : Transaction.Handler {
@@ -108,7 +110,7 @@ class MainFragment : Fragment(), AnkoLogger {
                         }
                     })
                 }
-                .setNegativeButton("Cancel") { _, _ -> }
+                .setNegativeButton(getString(R.string.cmd_cancel)) { _, _ -> }
                 .create()
                 .show()
     }

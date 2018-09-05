@@ -4,11 +4,17 @@
     <item
         android:id="@+id/menu_main_fragment_refresh"
         android:icon="@drawable/ic_refresh_black_24dp"
-        android:title="Refresh"
+        android:title="@string/cmd_refresh"
+        android:visible="false"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menu_main_fragment_change_password"
+        android:icon="@drawable/ic_lock_black_24dp"
+        android:title="@string/cmd_change_password"
+        app:showAsAction="never" />
     <item
         android:id="@+id/menu_main_fragment_logout"
         android:icon="@drawable/ic_power_settings_new_black_24dp"
-        android:title="Logout"
+        android:title="@string/cmd_logout"
         app:showAsAction="never" />
 </menu>

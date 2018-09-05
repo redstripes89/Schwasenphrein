@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Schwasenphrein</string>
-    <string name="label_required">Required</string>
+    <string name="info_required">Required</string>
     <string name="status_posting">Posting…</string>
     <string name="error_could_not_get_user">Error: Could not get user</string>
     <string name="status_signin_cancelled">Sign In was cancelled</string>
@@ -12,4 +12,18 @@
     <string name="label_person">Person</string>
     <string name="label_text">Text</string>
     <string name="info_cannot_rate_own_post">You can not rate your own post</string>
+    <string name="cmd_logout">Logout</string>
+    <string name="cmd_change_password">Change password</string>
+    <string name="cmd_refresh">Refresh</string>
+
+    <string name="title_my_rating">My Rating</string>
+    <string name="cmd_ok">OK</string>
+    <string name="cmd_cancel">Cancel</string>
+    <string name="title_change_password">Change Password</string>
+    <string name="info_password_sucessfully_updated">Password successfully updated</string>
+    <string name="error_authentication_failed">Authentication failed</string>
+    <string name="error_password_update_failure">Something went wrong. Please try again later</string>
+    <string name="info_password_restrictions">The password must consist of at least 6 characters and may only contain letters or numbers.</string>
+    <string name="label_new_password">New password</string>
+    <string name="label_current_password">Current password</string>
 </resources>

@@ -17,12 +17,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import de.redstripes.schwasenphrein.helpers.Helper
 import de.redstripes.schwasenphrein.models.Post
-import de.redstripes.schwasenphrein.viewholder.PostViewHolder
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.warn
 import org.threeten.bp.LocalDateTime
 import java.util.*
-import kotlin.math.roundToInt
 
 
 class NewPostFragment : DialogFragment(), AnkoLogger {
@@ -36,11 +34,11 @@ class NewPostFragment : DialogFragment(), AnkoLogger {
             val text = new_post_text.text.toString()
 
             if (TextUtils.isEmpty(person)) {
-                new_post_person.error = getString(R.string.label_required)
+                new_post_person.error = getString(R.string.info_required)
             }
 
             if (TextUtils.isEmpty(text)) {
-                new_post_text.error = getString(R.string.label_required)
+                new_post_text.error = getString(R.string.info_required)
                 return@setOnClickListener
             }
 

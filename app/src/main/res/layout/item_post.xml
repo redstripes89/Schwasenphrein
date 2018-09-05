@@ -29,22 +29,24 @@
 
                 <TextView
                     android:id="@+id/post_icon_text"
-                    android:textSize="26sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/google_sans"
+                    android:textSize="26sp" />
             </RelativeLayout>
 
             <TextView
                 android:id="@+id/post_person"
-                android:layout_marginStart="@dimen/margin_normal"
-                android:layout_marginEnd="@dimen/margin_normal"
                 style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start|center_vertical"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginEnd="@dimen/margin_normal"
                 android:layout_weight="1"
                 android:ellipsize="end"
+                android:fontFamily="@font/google_sans"
                 android:gravity="start|center_vertical"
                 android:maxLines="1"
                 android:textStyle="bold"
@@ -55,6 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:fontFamily="@font/google_sans"
                 android:drawableStart="@drawable/ic_star_border_pink_24dp"
                 android:drawablePadding="@dimen/margin_small"
                 android:gravity="center_vertical"

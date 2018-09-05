@@ -54,7 +54,7 @@
     </style>
 
     <style name="TextAppearance.ToolbarTitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:fontFamily">@font/google_sans</item>
+        <item name="android:fontFamily">@font/gloria_hallelujah</item>
     </style>
 
     <style name="SignInTheme" parent="AppTheme">

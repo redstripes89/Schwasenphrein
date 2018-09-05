@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="label_required">Pflichtfeld</string>
+    <string name="info_required">Pflichtfeld</string>
     <string name="status_posting">Eintragen...</string>
     <string name="error_could_not_get_user">Fehler: Benutzer nicht gefunden</string>
     <string name="status_signin_cancelled">Login wurd abgebrochen</string>
@@ -12,4 +12,17 @@
     <string name="label_text">Text</string>
     <string name="label_tap_pig_to_start">Drück das Schwein zum Starten</string>
     <string name="info_cannot_rate_own_post">Du kannst deinen eigenen Eintrag nicht bewerten!</string>
+    <string name="cmd_logout">Ausloggen</string>
+    <string name="cmd_change_password">Password ändern</string>
+    <string name="cmd_refresh">Aktualisieren</string>
+    <string name="title_my_rating">Meine Bewertung</string>
+    <string name="cmd_ok">OK</string>
+    <string name="cmd_cancel">Abbrechen</string>
+    <string name="title_change_password">Passwort ändern</string>
+    <string name="info_password_sucessfully_updated">Passwort erfolgreich aktualisiert</string>
+    <string name="error_password_update_failure">Etwas ist schief gegangen. Bitte versuche es später erneut.</string>
+    <string name="error_authentication_failed">Authentifizierung fehlgeschlagen</string>
+    <string name="label_new_password">Neues Password</string>
+    <string name="label_current_password">Aktuelles Password</string>
+    <string name="info_password_restrictions">Das Passwort muss aus mindestens 6 Zeichen bestehen und darf nur Buchstaben oder Ziffern enthalten.</string>
 </resources>
