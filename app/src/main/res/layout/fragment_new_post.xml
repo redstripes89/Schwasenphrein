@@ -4,96 +4,45 @@
     android:id="@+id/new_post_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/margin_normal">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/new_post_appbar"
-        style="@style/Widget.AppBar"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/new_post_person_container"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal">
 
-        <LinearLayout
-            android:id="@+id/new_post_appbar_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/new_post_btn_close"
-                android:layout_width="?attr/actionBarSize"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_close_black_24dp"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/new_post_title"
-                style="@style/TextAppearance.ToolbarTitle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/title_new_post" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/new_post_btn_add"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:paddingLeft="@dimen/margin_small"
-                android:paddingRight="@dimen/margin_small"
-                android:text="@string/cmd_add" />
-
-        </LinearLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <LinearLayout
-        android:id="@+id/new_post_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="@dimen/margin_normal">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/new_post_person_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <de.redstripes.schwasenphrein.helpers.TextInputAutoCompleteTextView
-                android:id="@+id/new_post_person"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|center_vertical"
-                android:hint="@string/label_person"
-                android:inputType="textAutoComplete"
-                tools:ignore="Autofill" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/new_post_text_container"
+        <de.redstripes.schwasenphrein.helpers.TextInputAutoCompleteTextView
+            android:id="@+id/new_post_person"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_normal">
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:hint="@string/label_person"
+            android:inputType="textAutoComplete"
+            tools:ignore="Autofill" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/new_post_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|center_vertical"
-                android:gravity="top|start"
-                android:hint="@string/label_text"
-                android:inputType="textMultiLine"
-                android:lines="8"
-                android:maxLines="10"
-                android:minLines="6"
-                android:overScrollMode="always"
-                android:scrollbarStyle="insideInset"
-                android:scrollbars="vertical"
-                tools:ignore="Autofill" />
-        </com.google.android.material.textfield.TextInputLayout>
-    </LinearLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/new_post_text_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/new_post_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:gravity="top|start"
+            android:hint="@string/label_text"
+            android:inputType="textMultiLine"
+            android:lines="8"
+            android:maxLines="10"
+            android:minLines="6"
+            android:overScrollMode="always"
+            android:scrollbarStyle="insideInset"
+            android:scrollbars="vertical"
+            tools:ignore="Autofill" />
+    </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>
