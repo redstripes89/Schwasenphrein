@@ -73,7 +73,7 @@ class MainFragment : Fragment(), AnkoLogger {
         manager.stackFromEnd = true
         recyclerView?.layoutManager = manager
 
-        val postsQuery = database?.child("posts")?.limitToFirst(100)
+        val postsQuery = database?.child("posts")?.limitToFirst(100)?.orderByChild("date")
         val options = FirebaseRecyclerOptions.Builder<Post>()
                 .setQuery(postsQuery!!, Post::class.java)
                 .setLifecycleOwner(viewLifecycleOwner)

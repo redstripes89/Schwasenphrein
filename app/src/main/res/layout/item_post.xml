@@ -71,6 +71,18 @@
             android:layout_below="@id/post_title_stars_container"
             android:layout_marginTop="@dimen/margin_normal"
             tools:text="Lorem ipsum, dolor sit amet..." />
+
+        <TextView
+            android:id="@+id/post_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/post_text"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/margin_small"
+            android:gravity="end"
+            android:textColor="@color/headblue_2"
+            android:textStyle="italic"
+            tools:text="14.01.2176" />
     </RelativeLayout>
 
 </com.google.android.material.card.MaterialCardView>

@@ -21,10 +21,12 @@ class PostViewHolder(itemView: View, private val letterTitleColors: TypedArray, 
     private val textView: TextView = itemView.findViewById(R.id.post_text)
     private val iconView: ImageView = itemView.findViewById(R.id.post_icon)
     private val iconTextView: TextView = itemView.findViewById(R.id.post_icon_text)
+    private val dateTextView: TextView = itemView.findViewById(R.id.post_date)
 
     fun bindToPost(post: Post, uid: String, starClickListener: View.OnClickListener) {
         personView.text = post.person
         textView.text = post.text
+        dateTextView.text = post.date
 
         iconTextView.text = post.person?.substring(0, 1)
         iconTextView.textColor = getForegroundColor(post.person)
