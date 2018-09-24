@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
 import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatSpinner
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +27,12 @@ import org.jetbrains.anko.debug
 import org.jetbrains.anko.warn
 import org.threeten.bp.LocalDateTime
 import java.util.*
+import kotlin.collections.ArrayList
+import android.widget.AdapterView
+import de.redstripes.schwasenphrein.MainActivity
+
+
+
 
 class MainFragment : Fragment(), AnkoLogger {
 
@@ -36,6 +44,7 @@ class MainFragment : Fragment(), AnkoLogger {
     private var parent: ViewGroup? = null
     private var database: DatabaseReference? = null
     private var recyclerView: RecyclerView? = null
+    private var spinner: AppCompatSpinner? = null
     private var adapter: FirebaseRecyclerAdapter<Post, PostViewHolder>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +64,30 @@ class MainFragment : Fragment(), AnkoLogger {
 
         rootView.main_fab_add_post.setOnClickListener {
             onFabClicked()
+        }
+
+        spinner = rootView.findViewById(R.id.main_spinner_order)
+        val orderList = ArrayList<String>()
+        orderList.add("Datum aufsteigend")
+        orderList.add("Datum absteigend")
+        orderList.add("Bewertung aufsteigend")
+        orderList.add("Bewertung absteigend")
+
+        val spinnerAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, orderList)
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner?.adapter = spinnerAdapter
+        spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(adapterView: AdapterView<*>, view: View, i: Int, l: Long) {
+
+                val companyId = orderList[i]
+                val companyName = orderList[i]
+                Toast.makeText(activity, "Company Name: $companyName", Toast.LENGTH_SHORT).show()
+
+            }
+
+            override fun onNothingSelected(adapterView: AdapterView<*>) {
+
+            }
         }
 
         return rootView
@@ -78,6 +111,7 @@ class MainFragment : Fragment(), AnkoLogger {
                 .setQuery(postsQuery!!, Post::class.java)
                 .setLifecycleOwner(viewLifecycleOwner)
                 .build()
+
         adapter = MainFragmentRecyclerAdapter(options, activity!!, database!!, ::onStarClicked)
         recyclerView?.adapter = adapter
     }
@@ -175,5 +209,5 @@ class MainFragment : Fragment(), AnkoLogger {
                 .show()
     }
 
-    fun getUid() = FirebaseAuth.getInstance().currentUser!!.uid
+    private fun getUid() = FirebaseAuth.getInstance().currentUser!!.uid
 }

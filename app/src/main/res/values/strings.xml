@@ -11,7 +11,7 @@
     <string name="cmd_add">Add</string>
     <string name="label_person">Person</string>
     <string name="label_text">Text</string>
-    <string name="info_cannot_rate_own_post">You can not rate your own post</string>
+    <string name="info_cannot_rate_own_post">You can not rate your own postItem</string>
     <string name="cmd_logout">Logout</string>
     <string name="cmd_change_password">Change password</string>
     <string name="cmd_refresh">Refresh</string>
