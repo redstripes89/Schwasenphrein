@@ -26,4 +26,9 @@
     <string name="info_password_restrictions">The password must consist of at least 6 characters and may only contain letters or numbers.</string>
     <string name="label_new_password">New password</string>
     <string name="label_current_password">Current password</string>
+
+    <string name="sorting_option_date_desc">Date \u2b07</string>
+    <string name="sorting_option_date_asc">Date \u2b06</string>
+    <string name="sorting_option_rating_desc">Rating \u2b07</string>
+    <string name="sorting_option_rating_asc">Rating \u2b06</string>
 </resources>

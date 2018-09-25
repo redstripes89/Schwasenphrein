@@ -12,6 +12,13 @@
         <item>Tobi</item>
     </string-array>
 
+    <string-array name="sorting_options">
+        <item>@string/sorting_option_date_desc</item>
+        <item>@string/sorting_option_date_asc</item>
+        <item>@string/sorting_option_rating_desc</item>
+        <item>@string/sorting_option_rating_asc</item>
+    </string-array>
+
     <array name="letter_tile_colors">
         <item>@color/google_red100</item>
         <item>@color/google_yellow100</item>

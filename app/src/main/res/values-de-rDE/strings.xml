@@ -25,4 +25,8 @@
     <string name="label_new_password">Neues Password</string>
     <string name="label_current_password">Aktuelles Password</string>
     <string name="info_password_restrictions">Das Passwort muss aus mindestens 6 Zeichen bestehen und darf nur Buchstaben oder Ziffern enthalten.</string>
+    <string name="sorting_option_date_desc">Bewertung \\u2b07</string>
+    <string name="sorting_option_date_asc">Datum \\u2b06</string>
+    <string name="sorting_option_rating_desc">Bewertung \\u2b07</string>
+    <string name="sorting_option_rating_asc">Bewertung \\u2b06</string>
 </resources>
