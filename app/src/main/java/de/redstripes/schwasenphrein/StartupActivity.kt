@@ -4,17 +4,13 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import de.redstripes.schwasenphrein.models.User
 import kotlinx.android.synthetic.main.activity_startup.*
 import org.jetbrains.anko.AnkoLogger
@@ -64,16 +60,16 @@ class StartupActivity : AppCompatActivity(), AnkoLogger {
                     moveToMainActivity(response)
                 } else {
                     if (response == null) {
-                        Snackbar.make(startup_root, getString(R.string.status_signin_cancelled), Toast.LENGTH_SHORT)
+                        Snackbar.make(startup_root, getString(R.string.status_signin_cancelled), Snackbar.LENGTH_SHORT)
                         return
                     }
 
                     if (response.error?.errorCode == ErrorCodes.NO_NETWORK) {
-                        Snackbar.make(startup_root, getString(R.string.status_no_internet), Toast.LENGTH_SHORT)
+                        Snackbar.make(startup_root, getString(R.string.status_no_internet), Snackbar.LENGTH_SHORT)
                         return
                     }
 
-                    Snackbar.make(startup_root, getString(R.string.status_unknown_error), Toast.LENGTH_SHORT)
+                    Snackbar.make(startup_root, getString(R.string.status_unknown_error), Snackbar.LENGTH_SHORT)
                     error("Sign In error: " + response.error)
                 }
             }

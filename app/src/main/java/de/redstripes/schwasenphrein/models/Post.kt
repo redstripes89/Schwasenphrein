@@ -2,8 +2,6 @@ package de.redstripes.schwasenphrein.models
 
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
-import de.redstripes.schwasenphrein.helpers.Helper
-import org.threeten.bp.LocalDateTime
 import java.util.*
 
 @IgnoreExtraProperties

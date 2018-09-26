@@ -1,5 +1,6 @@
 package de.redstripes.schwasenphrein.viewholder
 
+import android.annotation.SuppressLint
 import android.content.res.TypedArray
 import android.graphics.PorterDuff
 import android.text.TextUtils
@@ -22,6 +23,7 @@ class PostItemViewHolder(view: View, private val letterTitleColors: TypedArray?,
     private val iconTextView: TextView = view.findViewById(R.id.post_icon_text)
     private val dateTextView: TextView = view.findViewById(R.id.post_date)
 
+    @SuppressLint("SetTextI18n")
     override fun bindView(item: PostItem, payloads: List<Any>) {
         personView.text = item.post.person
         textView.text = item.post.text

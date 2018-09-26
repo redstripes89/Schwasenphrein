@@ -6,7 +6,6 @@ import com.mikepenz.fastadapter.items.AbstractItem
 import de.redstripes.schwasenphrein.R
 import de.redstripes.schwasenphrein.viewholder.PostItemViewHolder
 
-
 class PostItem(val id: Long, var post: Post, private val letterTitleColors: TypedArray?, private val letterTitleColorsDark: TypedArray?) : AbstractItem<PostItem, PostItemViewHolder>() {
 
     override fun getIdentifier(): Long = id
@@ -16,6 +15,11 @@ class PostItem(val id: Long, var post: Post, private val letterTitleColors: Type
     override fun getLayoutRes(): Int = R.layout.item_post
 
     override fun getViewHolder(v: View): PostItemViewHolder = PostItemViewHolder(v, letterTitleColors, letterTitleColorsDark)
+
+    override fun bindView(holder: PostItemViewHolder, payloads: MutableList<Any>) {
+        super.bindView(holder, payloads)
+        holder.itemView.setTag(R.id.fastadapter_item, this)
+    }
 
     fun update(post: Post) {
         this.post = post

@@ -18,7 +18,7 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_change_password.view.*
 import java.util.regex.Pattern
-
+import com.mikepenz.materialize.MaterializeBuilder
 
 class MainActivity : AppCompatActivity() {
 
@@ -88,8 +88,8 @@ class MainActivity : AppCompatActivity() {
                     val credential = EmailAuthProvider.getCredential(email, oldPassword)
                     user.reauthenticate(credential).addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            user.updatePassword(newPassword).addOnCompleteListener { task ->
-                                if (!task.isSuccessful) {
+                            user.updatePassword(newPassword).addOnCompleteListener { innerTask ->
+                                if (!innerTask.isSuccessful) {
                                     Toast.makeText(applicationContext, getString(R.string.error_password_update_failure), Toast.LENGTH_LONG).show()
                                 } else {
                                     Toast.makeText(applicationContext, getString(R.string.info_password_sucessfully_updated), Toast.LENGTH_LONG).show()

@@ -4,18 +4,23 @@ import android.content.res.TypedArray
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.annotation.Nullable
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.mikepenz.fastadapter.FastAdapter
-import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
+import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.listeners.ClickEventHook
+import com.mikepenz.fastadapter.utils.ComparableItemListImpl
+import com.mikepenz.materialize.MaterializeBuilder
 import de.redstripes.schwasenphrein.R
 import de.redstripes.schwasenphrein.helpers.Helper
 import de.redstripes.schwasenphrein.models.Post
@@ -31,8 +36,7 @@ import org.jetbrains.anko.warn
 import org.threeten.bp.LocalDateTime
 import java.util.concurrent.ThreadLocalRandom
 
-
-enum class SortType {
+/*enum class SortType {
     DateAsc {
         override fun modifyQuery(query: Query): Query = query.orderByChild("date")
     },
@@ -47,7 +51,7 @@ enum class SortType {
     };
 
     abstract fun modifyQuery(query: Query): Query
-}
+}*/
 
 class MainFragment : Fragment(), AnkoLogger {
 
@@ -60,12 +64,17 @@ class MainFragment : Fragment(), AnkoLogger {
     private var database: DatabaseReference? = null
     private var recyclerView: RecyclerView? = null
     private var spinner: AppCompatSpinner? = null
-    private val fastItemAdapter = FastItemAdapter<PostItem>()
+
+    private var itemListImpl: ComparableItemListImpl<PostItem> = ComparableItemListImpl(getComparator())
+    private var itemAdapter: ItemAdapter<PostItem> = ItemAdapter(itemListImpl)
+    private val fastAdapter: FastAdapter<PostItem> = FastAdapter.with(itemAdapter)
+
     private val keyToId: MutableMap<String, Long> = HashMap()
     private var letterTitleColors: TypedArray? = null
     private var letterTitleColorsDark: TypedArray? = null
 
-    private var selectedSortingOption: Int = 0
+    //@SortingStrategy
+    private var sortingStrategy: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,6 +82,12 @@ class MainFragment : Fragment(), AnkoLogger {
 
         letterTitleColors = context!!.resources.obtainTypedArray(R.array.letter_tile_colors)
         letterTitleColorsDark = context!!.resources.obtainTypedArray(R.array.letter_tile_colors_dark)
+
+        sortingStrategy = if (savedInstanceState != null) {
+            toSortingStrategy(savedInstanceState.getInt("sorting_strategy"));
+        } else {
+            -1
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -90,31 +105,27 @@ class MainFragment : Fragment(), AnkoLogger {
         }
 
         spinner = rootView.findViewById(R.id.main_spinner_order)
-        ArrayAdapter.createFromResource(context, R.array.sorting_options, android.R.layout.simple_spinner_item).also { adapter ->
+        ArrayAdapter.createFromResource(context!!, R.array.sorting_options, android.R.layout.simple_spinner_item).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner?.adapter = adapter
         }
 
-        /*spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, pos: Int, id: Long) {
-                if (recyclerView == null || recyclerViewManager == null || adapter == null)
+                if (recyclerView == null)
                     return
 
-                selectedSortingOption = pos
-                val reverse = pos % 2 == 0
-                if (reverse != recyclerViewManager!!.reverseLayout) {
-                    recyclerViewManager!!.reverseLayout = reverse
-                    if (reverse)
-                        recyclerViewManager!!.scrollToPosition(adapter!!.itemCount-1)
-                    else
-                        recyclerViewManager!!.scrollToPosition(0)
+                sortingStrategy = when (pos) {
+                    in 0..3 -> pos
+                    else -> -1
                 }
+                itemListImpl.withComparator(getComparator())
             }
 
             override fun onNothingSelected(adapterView: AdapterView<*>) {
 
             }
-        }*/
+        }
 
         return rootView
     }
@@ -128,9 +139,10 @@ class MainFragment : Fragment(), AnkoLogger {
         super.onActivityCreated(savedInstanceState)
 
         recyclerView?.layoutManager = LinearLayoutManager(activity!!)
+        recyclerView?.itemAnimator = DefaultItemAnimator()
 
-        fastItemAdapter.setHasStableIds(true)
-        fastItemAdapter.withEventHook(object : ClickEventHook<PostItem>() {
+        fastAdapter.setHasStableIds(true)
+        fastAdapter.withEventHook(object : ClickEventHook<PostItem>() {
             override fun onBind(viewHolder: RecyclerView.ViewHolder): View? {
                 return if (viewHolder is PostItemViewHolder)
                     viewHolder.numStarsView
@@ -143,7 +155,7 @@ class MainFragment : Fragment(), AnkoLogger {
                 val uid = getUid()
                 val username = getUserName()
 
-                if (key == null || uid == null)
+                if (key == null)
                     return
 
                 if (item.post.person == username) {
@@ -160,26 +172,9 @@ class MainFragment : Fragment(), AnkoLogger {
             }
 
         })
-        recyclerView?.adapter = fastItemAdapter
+        recyclerView?.adapter = fastAdapter
 
         val postsQuery = database?.child("posts")?.orderByChild("date")
-        postsQuery?.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-                warn("getPosts:onCancelled " + error.toException())
-            }
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (postSnapshot in dataSnapshot.children) {
-                    val post = postSnapshot.getValue(Post::class.java)
-                    if (post != null) {
-                        val id = ThreadLocalRandom.current().nextLong()
-                        keyToId[postSnapshot.key!!] = id
-                        fastItemAdapter.add(PostItem(id, post, letterTitleColors, letterTitleColorsDark))
-                    }
-                }
-            }
-        })
-
         postsQuery?.addChildEventListener(object : ChildEventListener {
             override fun onCancelled(error: DatabaseError) {
                 warn("postsChildEvents:onCancelled " + error.toException())
@@ -190,7 +185,7 @@ class MainFragment : Fragment(), AnkoLogger {
             }
 
             override fun onChildChanged(dataSnapshot: DataSnapshot, prevChildKey: String?) {
-                if(!keyToId.containsKey(dataSnapshot.key))
+                if (!keyToId.containsKey(dataSnapshot.key))
                     return
 
                 val id = keyToId[dataSnapshot.key]!!
@@ -198,7 +193,7 @@ class MainFragment : Fragment(), AnkoLogger {
                 val post = dataSnapshot.getValue(Post::class.java) ?: return
 
                 item.update(post)
-                fastItemAdapter.notifyItemChanged(fastItemAdapter.getPosition(item))
+                fastAdapter.notifyItemChanged(fastAdapter.getPosition(item))
             }
 
             override fun onChildAdded(dataSnapshot: DataSnapshot, prevChildKey: String?) {
@@ -206,20 +201,39 @@ class MainFragment : Fragment(), AnkoLogger {
                 if (post != null) {
                     val id = ThreadLocalRandom.current().nextLong()
                     keyToId[dataSnapshot.key!!] = id
-                    fastItemAdapter.add(PostItem(id, post, letterTitleColors, letterTitleColorsDark))
+                    itemAdapter.add(PostItem(id, post, letterTitleColors, letterTitleColorsDark))
                 }
             }
 
             override fun onChildRemoved(dataSnapshot: DataSnapshot) {
-                if(!keyToId.containsKey(dataSnapshot.key))
+                if (!keyToId.containsKey(dataSnapshot.key))
                     return
 
                 val id = keyToId[dataSnapshot.key]!!
                 val item = getItemForId(id) ?: return
-                fastItemAdapter.remove(fastItemAdapter.getPosition(item))
+                itemAdapter.remove(itemAdapter.getAdapterPosition(item))
             }
-
         })
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putInt("sorting_strategy", sortingStrategy)
+        super.onSaveInstanceState(outState)
+    }
+
+    private fun toSortingStrategy(value: Int): Int = value
+
+    @Nullable
+    private fun getComparator(): Comparator<PostItem>? {
+        when (sortingStrategy) {
+            0 -> return DateComparatorDescending()
+            1 -> return DateComparatorAscending()
+            2 -> return RatingComparatorDescending()
+            3 -> return RatingComparatorAscending()
+            -1 -> return null
+        }
+
+        throw RuntimeException("This sortingStrategy is not supported.")
     }
 
     private fun onFabClicked() {
@@ -328,7 +342,7 @@ class MainFragment : Fragment(), AnkoLogger {
     }
 
     private fun getItemForId(id: Long): PostItem? {
-        for (item in fastItemAdapter.adapterItems) {
+        for (item in itemAdapter.adapterItems) {
             if (item.id == id)
                 return item
         }
@@ -338,4 +352,44 @@ class MainFragment : Fragment(), AnkoLogger {
 
     private fun getUid() = FirebaseAuth.getInstance().currentUser!!.uid
     private fun getUserName() = FirebaseAuth.getInstance().currentUser!!.displayName
+
+    private class DateComparatorAscending : Comparator<PostItem> {
+        override fun compare(a: PostItem?, b: PostItem?): Int {
+            if(a == null || b == null)
+                return 0
+            val aDate = a.post.date
+            val bDate = b.post.date
+            if(aDate == null || bDate == null)
+                return 0
+            return aDate.compareTo(bDate)
+        }
+    }
+
+    private class DateComparatorDescending : Comparator<PostItem> {
+        override fun compare(a: PostItem?, b: PostItem?): Int {
+            if(a == null || b == null)
+                return 0
+            val aDate = a.post.date
+            val bDate = b.post.date
+            if(aDate == null || bDate == null)
+                return 0
+            return bDate.compareTo(aDate)
+        }
+    }
+
+    private class RatingComparatorAscending : Comparator<PostItem> {
+        override fun compare(a: PostItem?, b: PostItem?): Int {
+            if(a == null || b == null)
+                return 0
+            return a.post.starCount.compareTo(b.post.starCount)
+        }
+    }
+
+    private class RatingComparatorDescending : Comparator<PostItem> {
+        override fun compare(a: PostItem?, b: PostItem?): Int {
+            if(a == null || b == null)
+                return 0
+            return b.post.starCount.compareTo(a.post.starCount)
+        }
+    }
 }
