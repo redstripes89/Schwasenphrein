@@ -8,6 +8,7 @@ import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.IItem
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter
 import de.redstripes.schwasenphrein.R
+import de.redstripes.schwasenphrein.models.Post
 import de.redstripes.schwasenphrein.models.PostItem
 
 /**
@@ -15,7 +16,7 @@ import de.redstripes.schwasenphrein.models.PostItem
  * This is a FastAdapter adapter implementation for the awesome Sticky-Headers lib by timehop
  * https://github.com/timehop/sticky-headers-recyclerview
  */
-class StickyHeaderAdapter<Item : IItem<*, *>> : RecyclerView.Adapter<RecyclerView.ViewHolder>(), StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
+class StickyHeaderAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
 
     /*
     * GENERAL CODE NEEDED TO WRAP AN ADAPTER
@@ -26,7 +27,7 @@ class StickyHeaderAdapter<Item : IItem<*, *>> : RecyclerView.Adapter<RecyclerVie
     /**
      * @return the reference to the FastAdapter
      */
-    var fastAdapter: FastAdapter<Item>? = null
+    var fastAdapter: FastAdapter<PostItem>? = null
         private set
 
     override fun getHeaderId(position: Int): Long {
@@ -34,8 +35,8 @@ class StickyHeaderAdapter<Item : IItem<*, *>> : RecyclerView.Adapter<RecyclerVie
 
         //in our sample we want a separate header per first letter of our items
         //this if is not necessary for your code, we only use it as this sticky header is reused for different item implementations
-        if (item is PostItem && (item as PostItem).post.date != null) {
-            return (item as PostItem).post.date!!.elementAt(0).toLong()
+        if (item.post.date != null) {
+            return item.post.date!!.elementAt(0).toLong()
         }
         return -1
     }
@@ -52,9 +53,9 @@ class StickyHeaderAdapter<Item : IItem<*, *>> : RecyclerView.Adapter<RecyclerVie
         val textView = holder.itemView as TextView
 
         val item = getItem(position)
-        if (item is PostItem && (item as PostItem).post.date != null) {
+        if (item.post.date != null) {
             //based on the position we set the headers text
-            textView.text = (item as PostItem).post.date!!.elementAt(0).toString()
+            textView.text = item.post.date!!.elementAt(0).toString()
         }
         //holder.itemView.setBackgroundColor(randomColor)
     }
@@ -65,7 +66,7 @@ class StickyHeaderAdapter<Item : IItem<*, *>> : RecyclerView.Adapter<RecyclerVie
      * @param fastAdapter the FastAdapter which contains the base logic
      * @return this
      */
-    fun wrap(fastAdapter: FastAdapter<Item>): StickyHeaderAdapter<Item> {
+    fun wrap(fastAdapter: FastAdapter<PostItem>): StickyHeaderAdapter {
         //this.mParentAdapter = abstractAdapter;
         this.fastAdapter = fastAdapter
         return this
@@ -121,7 +122,7 @@ class StickyHeaderAdapter<Item : IItem<*, *>> : RecyclerView.Adapter<RecyclerVie
      * @param position
      * @return
      */
-    fun getItem(position: Int): Item {
+    fun getItem(position: Int): PostItem {
         return fastAdapter!!.getItem(position)
     }
 

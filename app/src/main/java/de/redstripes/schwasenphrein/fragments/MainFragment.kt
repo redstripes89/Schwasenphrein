@@ -17,11 +17,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.adapters.ItemAdapter
+import com.mikepenz.fastadapter.adapters.ItemAdapter.items
 import com.mikepenz.fastadapter.listeners.ClickEventHook
 import com.mikepenz.fastadapter.utils.ComparableItemListImpl
 import com.mikepenz.materialize.MaterializeBuilder
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
 import de.redstripes.schwasenphrein.R
+import de.redstripes.schwasenphrein.adapters.StickyHeaderAdapter
 import de.redstripes.schwasenphrein.helpers.Helper
 import de.redstripes.schwasenphrein.models.Post
 import de.redstripes.schwasenphrein.models.PostItem
@@ -34,24 +38,8 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
 import org.jetbrains.anko.warn
 import org.threeten.bp.LocalDateTime
+import java.util.*
 import java.util.concurrent.ThreadLocalRandom
-
-/*enum class SortType {
-    DateAsc {
-        override fun modifyQuery(query: Query): Query = query.orderByChild("date")
-    },
-    DateDesc {
-        override fun modifyQuery(query: Query): Query = query.orderByChild("date")
-    },
-    RatingAsc {
-        override fun modifyQuery(query: Query): Query = query.orderByChild("starCount")
-    },
-    RatingDesc {
-        override fun modifyQuery(query: Query): Query = query.orderByChild("starCount")
-    };
-
-    abstract fun modifyQuery(query: Query): Query
-}*/
 
 class MainFragment : Fragment(), AnkoLogger {
 
@@ -65,9 +53,10 @@ class MainFragment : Fragment(), AnkoLogger {
     private var recyclerView: RecyclerView? = null
     private var spinner: AppCompatSpinner? = null
 
-    private var itemListImpl: ComparableItemListImpl<PostItem> = ComparableItemListImpl(getComparator())
-    private var itemAdapter: ItemAdapter<PostItem> = ItemAdapter(itemListImpl)
-    private val fastAdapter: FastAdapter<PostItem> = FastAdapter.with(itemAdapter)
+    private val itemListImpl: ComparableItemListImpl<PostItem> = ComparableItemListImpl(getComparator())
+    private val itemAdapter: ItemAdapter<PostItem> = ItemAdapter(itemListImpl)
+    private val headerAdapter: ItemAdapter<PostItem> = ItemAdapter()
+    private val fastAdapter: FastAdapter<PostItem> = FastAdapter.with(Arrays.asList(itemAdapter, headerAdapter))
 
     private val keyToId: MutableMap<String, Long> = HashMap()
     private var letterTitleColors: TypedArray? = null
@@ -84,7 +73,7 @@ class MainFragment : Fragment(), AnkoLogger {
         letterTitleColorsDark = context!!.resources.obtainTypedArray(R.array.letter_tile_colors_dark)
 
         sortingStrategy = if (savedInstanceState != null) {
-            toSortingStrategy(savedInstanceState.getInt("sorting_strategy"));
+            toSortingStrategy(savedInstanceState.getInt("sorting_strategy"))
         } else {
             -1
         }
@@ -172,7 +161,17 @@ class MainFragment : Fragment(), AnkoLogger {
             }
 
         })
-        recyclerView?.adapter = fastAdapter
+
+        val stickyHeaderAdapter = StickyHeaderAdapter()
+        recyclerView?.adapter = stickyHeaderAdapter.wrap(fastAdapter)
+
+        val decoration = StickyRecyclerHeadersDecoration(stickyHeaderAdapter)
+        recyclerView?.addItemDecoration(decoration)
+        fastAdapter.registerAdapterDataObserver(object: RecyclerView.AdapterDataObserver(){
+            override fun onChanged() {
+                decoration.invalidateHeaders()
+            }
+        })
 
         val postsQuery = database?.child("posts")?.orderByChild("date")
         postsQuery?.addChildEventListener(object : ChildEventListener {
