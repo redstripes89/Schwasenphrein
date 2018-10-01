@@ -27,7 +27,7 @@ class PostItemViewHolder(view: View, private val letterTitleColors: TypedArray?,
     override fun bindView(item: PostItem, payloads: List<Any>) {
         personView.text = item.post.person
         textView.text = item.post.text
-        dateTextView.text = item.post.date
+        dateTextView.text = item.post.formattedDate
 
         iconTextView.text = item.post.person?.substring(0, 1)
         iconTextView.textColor = getForegroundColor(item.post.person)

@@ -1,14 +1,13 @@
 package de.redstripes.schwasenphrein.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mikepenz.fastadapter.FastAdapter
-import com.mikepenz.fastadapter.IItem
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter
 import de.redstripes.schwasenphrein.R
-import de.redstripes.schwasenphrein.models.Post
 import de.redstripes.schwasenphrein.models.PostItem
 
 /**
@@ -21,43 +20,46 @@ class StickyHeaderAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Sti
     /*
     * GENERAL CODE NEEDED TO WRAP AN ADAPTER
      */
-
-    //private AbstractAdapter mParentAdapter;
-    //keep a reference to the FastAdapter which contains the base logic
-    /**
-     * @return the reference to the FastAdapter
-     */
-    var fastAdapter: FastAdapter<PostItem>? = null
-        private set
+    var sortingStrategy: Int = 0
+    private var fastAdapter: FastAdapter<PostItem>? = null
 
     override fun getHeaderId(position: Int): Long {
         val item = getItem(position)
 
-        //in our sample we want a separate header per first letter of our items
-        //this if is not necessary for your code, we only use it as this sticky header is reused for different item implementations
-        if (item.post.date != null) {
-            return item.post.date!!.elementAt(0).toLong()
+        if (sortingStrategy in 0..1) {
+            if (item.post.year != null && item.post.month != null) {
+                return (item.post.year!! * 100 + item.post.month!!).toLong()
+            }
+        } else if (sortingStrategy in 2..3) {
+            return kotlin.math.floor(item.post.starCount).toLong()
         }
         return -1
     }
 
     override fun onCreateHeaderViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
-        //we create the view for the header
         val view = LayoutInflater.from(parent.context).inflate(R.layout.view_header, parent, false)
         return object : RecyclerView.ViewHolder(view) {
 
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindHeaderViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val textView = holder.itemView as TextView
 
         val item = getItem(position)
-        if (item.post.date != null) {
-            //based on the position we set the headers text
-            textView.text = item.post.date!!.elementAt(0).toString()
+        if (sortingStrategy in 0..1) {
+            if (item.post.year != null && item.post.month != null) {
+                textView.text = "${item.post.monthName} ${item.post.year}"
+                return
+            }
+        } else if (sortingStrategy in 2..3) {
+            val stars = kotlin.math.floor(item.post.starCount).toInt()
+            textView.text = textView.context.resources.getQuantityString(R.plurals.numberOfStarsGroup, stars, stars)
+            return
         }
-        //holder.itemView.setBackgroundColor(randomColor)
+
+        textView.text = "Error"
     }
 
     /**
@@ -67,7 +69,6 @@ class StickyHeaderAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Sti
      * @return this
      */
     fun wrap(fastAdapter: FastAdapter<PostItem>): StickyHeaderAdapter {
-        //this.mParentAdapter = abstractAdapter;
         this.fastAdapter = fastAdapter
         return this
     }

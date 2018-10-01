@@ -17,12 +17,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.mikepenz.fastadapter.FastAdapter
-import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.adapters.ItemAdapter
-import com.mikepenz.fastadapter.adapters.ItemAdapter.items
 import com.mikepenz.fastadapter.listeners.ClickEventHook
 import com.mikepenz.fastadapter.utils.ComparableItemListImpl
-import com.mikepenz.materialize.MaterializeBuilder
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
 import de.redstripes.schwasenphrein.R
 import de.redstripes.schwasenphrein.adapters.StickyHeaderAdapter
@@ -37,7 +34,7 @@ import kotlinx.android.synthetic.main.fragment_rating.view.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
 import org.jetbrains.anko.warn
-import org.threeten.bp.LocalDateTime
+import org.threeten.bp.LocalDate
 import java.util.*
 import java.util.concurrent.ThreadLocalRandom
 
@@ -57,6 +54,7 @@ class MainFragment : Fragment(), AnkoLogger {
     private val itemAdapter: ItemAdapter<PostItem> = ItemAdapter(itemListImpl)
     private val headerAdapter: ItemAdapter<PostItem> = ItemAdapter()
     private val fastAdapter: FastAdapter<PostItem> = FastAdapter.with(Arrays.asList(itemAdapter, headerAdapter))
+    private val stickyHeaderAdapter: StickyHeaderAdapter = StickyHeaderAdapter()
 
     private val keyToId: MutableMap<String, Long> = HashMap()
     private var letterTitleColors: TypedArray? = null
@@ -108,6 +106,7 @@ class MainFragment : Fragment(), AnkoLogger {
                     in 0..3 -> pos
                     else -> -1
                 }
+                stickyHeaderAdapter.sortingStrategy = sortingStrategy
                 itemListImpl.withComparator(getComparator())
             }
 
@@ -162,7 +161,6 @@ class MainFragment : Fragment(), AnkoLogger {
 
         })
 
-        val stickyHeaderAdapter = StickyHeaderAdapter()
         recyclerView?.adapter = stickyHeaderAdapter.wrap(fastAdapter)
 
         val decoration = StickyRecyclerHeadersDecoration(stickyHeaderAdapter)
@@ -190,18 +188,18 @@ class MainFragment : Fragment(), AnkoLogger {
                 val id = keyToId[dataSnapshot.key]!!
                 val item = getItemForId(id) ?: return
                 val post = dataSnapshot.getValue(Post::class.java) ?: return
+                post.parseDate()
 
                 item.update(post)
                 fastAdapter.notifyItemChanged(fastAdapter.getPosition(item))
             }
 
             override fun onChildAdded(dataSnapshot: DataSnapshot, prevChildKey: String?) {
-                val post = dataSnapshot.getValue(Post::class.java)
-                if (post != null) {
-                    val id = ThreadLocalRandom.current().nextLong()
-                    keyToId[dataSnapshot.key!!] = id
-                    itemAdapter.add(PostItem(id, post, letterTitleColors, letterTitleColorsDark))
-                }
+                val post = dataSnapshot.getValue(Post::class.java) ?: return
+                post.parseDate()
+                val id = ThreadLocalRandom.current().nextLong()
+                keyToId[dataSnapshot.key!!] = id
+                itemAdapter.add(PostItem(id, post, letterTitleColors, letterTitleColorsDark))
             }
 
             override fun onChildRemoved(dataSnapshot: DataSnapshot) {
@@ -277,7 +275,7 @@ class MainFragment : Fragment(), AnkoLogger {
                     error("User $uid is unexpectedly null")
                 } else {
                     val key = database.child("posts").push().key
-                    val post = Post(uid, person, text, Helper.dateToString(LocalDateTime.now()))
+                    val post = Post(uid, person, text, Helper.dateToString(LocalDate.now()))
                     val postValues = post.toMap()
                     val childUpdates = HashMap<String, Any>()
                     childUpdates["/posts/$key"] = postValues

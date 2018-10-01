@@ -25,7 +25,8 @@
         android:layout_height="match_parent"
         android:layout_below="@id/main_topbar"
         android:clipToPadding="false"
-        android:padding="@dimen/margin_small"
+        android:paddingTop="@dimen/margin_small"
+        android:paddingBottom="@dimen/margin_small"
         android:scrollbars="vertical"
         tools:listitem="@layout/item_post" />
 

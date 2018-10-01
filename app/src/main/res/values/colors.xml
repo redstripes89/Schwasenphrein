@@ -18,12 +18,10 @@
     <color name="colorPrimaryDark">@color/bluegrey_200</color>
     <color name="colorPrimaryLight">@color/white</color>
     <color name="colorAccent">@color/pink_a400</color>
-    <!-- <color name="colorAccent">@color/pink_ears</color> -->
-    <!--<color name="colorAccent">#ff3c00</color>-->
-    <!--<color name="colorAccentDark">#c30000</color>-->
-    <!--<color name="colorAccentLight">#ff6a38</color>-->
     <color name="colorPrimaryText">@color/white</color>
     <color name="colorAccentText">@color/white</color>
+
+    <color name="headerBackground">#88b0bec5</color>
 
     <color name="tab_text">#000</color>
 

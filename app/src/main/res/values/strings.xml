@@ -31,4 +31,9 @@
     <string name="sorting_option_date_asc">Date \u2b06</string>
     <string name="sorting_option_rating_desc">Rating \u2b07</string>
     <string name="sorting_option_rating_asc">Rating \u2b06</string>
+
+    <plurals name="numberOfStarsGroup">
+        <item quantity="one">%d star</item>
+        <item quantity="other">%d stars</item>
+    </plurals>
 </resources>
