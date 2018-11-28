@@ -8,15 +8,27 @@
     tools:context=".fragments.MainFragment">
 
     <LinearLayout
+        android:id="@+id/main_topbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/main_topbar"
+        android:paddingBottom="@dimen/margin_verysmall"
+        android:paddingTop="@dimen/margin_verysmall"
+        android:paddingStart="@dimen/margin_small"
+        android:paddingEnd="@dimen/margin_small"
         android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/main_spinner_order"
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/label_sorting"/>
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/main_spinner_sorting"
+            android:layout_marginStart="@dimen/margin_verysmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

@@ -1,39 +1,41 @@
 <resources>
-    <string name="app_name" translatable="false">Schwasenphrein</string>
-    <string name="info_required">Required</string>
-    <string name="status_posting">Posting…</string>
-    <string name="error_could_not_get_user">Error: Could not get user</string>
-    <string name="status_signin_cancelled">Sign In was cancelled</string>
-    <string name="status_no_internet">No internet connection</string>
-    <string name="status_unknown_error">Unknown error</string>
-    <string name="label_tap_pig_to_start">Tap the pig to start</string>
-    <string name="title_new_post">New Post</string>
-    <string name="cmd_add">Add</string>
+    <string name="app_name">Schwasenphrein</string>
+
+    <string name="info_required">Pflichtfeld</string>
+    <string name="status_posting_successfull">Eintrag hinzugefügt</string>
+    <string name="status_posting_not_successfull">Fehler beim Hinzufügen des Eintrags</string>
+    <string name="error_could_not_get_user">Fehler: Benutzer nicht gefunden</string>
+    <string name="status_signin_cancelled">Login wurde abgebrochen</string>
+    <string name="status_no_internet">Keine Internetverbindung</string>
+    <string name="status_unknown_error">Unbekannter Fehler</string>
+    <string name="title_new_post">Neuer Eintrag</string>
+    <string name="cmd_add">Hinzufügen</string>
     <string name="label_person">Person</string>
     <string name="label_text">Text</string>
-    <string name="info_cannot_rate_own_post">You can not rate your own postItem</string>
-    <string name="cmd_logout">Logout</string>
-    <string name="cmd_change_password">Change password</string>
-    <string name="cmd_refresh">Refresh</string>
-
-    <string name="title_my_rating">My Rating</string>
+    <string name="label_tap_pig_to_start">Drück das Schwein zum Starten</string>
+    <string name="info_cannot_rate_own_post">Du kannst deinen eigenen Eintrag nicht bewerten!</string>
+    <string name="cmd_logout">Ausloggen</string>
+    <string name="cmd_change_password">Password ändern</string>
+    <string name="cmd_refresh">Aktualisieren</string>
+    <string name="title_my_rating">Meine Bewertung</string>
     <string name="cmd_ok">OK</string>
-    <string name="cmd_cancel">Cancel</string>
-    <string name="title_change_password">Change Password</string>
-    <string name="info_password_sucessfully_updated">Password successfully updated</string>
-    <string name="error_authentication_failed">Authentication failed</string>
-    <string name="error_password_update_failure">Something went wrong. Please try again later</string>
-    <string name="info_password_restrictions">The password must consist of at least 6 characters and may only contain letters or numbers.</string>
-    <string name="label_new_password">New password</string>
-    <string name="label_current_password">Current password</string>
-
-    <string name="sorting_option_date_desc">Date \u2b07</string>
-    <string name="sorting_option_date_asc">Date \u2b06</string>
-    <string name="sorting_option_rating_desc">Rating \u2b07</string>
-    <string name="sorting_option_rating_asc">Rating \u2b06</string>
+    <string name="cmd_cancel">Abbrechen</string>
+    <string name="title_change_password">Passwort ändern</string>
+    <string name="info_password_sucessfully_updated">Passwort erfolgreich aktualisiert</string>
+    <string name="error_password_update_failure">Etwas ist schief gegangen. Bitte versuche es später erneut.</string>
+    <string name="error_authentication_failed">Authentifizierung fehlgeschlagen</string>
+    <string name="label_new_password">Neues Password</string>
+    <string name="label_current_password">Aktuelles Password</string>
+    <string name="info_password_restrictions">Das Passwort muss aus mindestens 6 Zeichen bestehen und darf nur Buchstaben oder Ziffern enthalten.</string>
+    <string name="sorting_option_date_desc">Datum \u2b07</string>
+    <string name="sorting_option_date_asc">Datum \u2b06</string>
+    <string name="sorting_option_rating_desc">Bewertung \u2b07</string>
+    <string name="sorting_option_rating_asc">Bewertung \u2b06</string>
+    <string name="label_sorting">Sortierung:</string>
 
     <plurals name="numberOfStarsGroup">
-        <item quantity="one">%d star</item>
-        <item quantity="other">%d stars</item>
+        <item quantity="one">%d Stern</item>
+        <item quantity="other">%d Sterne</item>
     </plurals>
+
 </resources>

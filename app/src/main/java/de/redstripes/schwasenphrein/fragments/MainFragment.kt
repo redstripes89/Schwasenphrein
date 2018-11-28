@@ -46,6 +46,7 @@ class MainFragment : Fragment(), AnkoLogger {
     }
 
     private var parent: ViewGroup? = null
+    private var currentUser: User? = null
     private var database: DatabaseReference? = null
     private var recyclerView: RecyclerView? = null
     private var spinner: AppCompatSpinner? = null
@@ -84,6 +85,23 @@ class MainFragment : Fragment(), AnkoLogger {
 
         database = FirebaseDatabase.getInstance().reference
 
+        database!!.child("users").child(getUid()).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val user = dataSnapshot.getValue<User>(User::class.java)
+
+                if (user == null) {
+                    Toast.makeText(activity, getString(R.string.error_could_not_get_user), Toast.LENGTH_SHORT).show()
+                    error("User ${getUid()} is unexpectedly null")
+                } else {
+                    currentUser = user
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                warn("getUser:onCancelled " + error.toException())
+            }
+        })
+
         recyclerView = rootView.findViewById(R.id.main_posts)
         recyclerView?.setHasFixedSize(true)
 
@@ -91,7 +109,7 @@ class MainFragment : Fragment(), AnkoLogger {
             onFabClicked()
         }
 
-        spinner = rootView.findViewById(R.id.main_spinner_order)
+        spinner = rootView.findViewById(R.id.main_spinner_sorting)
         ArrayAdapter.createFromResource(context!!, R.array.sorting_options, android.R.layout.simple_spinner_item).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner?.adapter = adapter
@@ -141,12 +159,11 @@ class MainFragment : Fragment(), AnkoLogger {
             override fun onClick(v: View, position: Int, fastAdapter: FastAdapter<PostItem>, item: PostItem) {
                 val key = getKeyForId(item.id)
                 val uid = getUid()
-                val username = getUserName()
 
                 if (key == null)
                     return
 
-                if (item.post.person == username) {
+                if (item.post.person == currentUser!!.username) {
                     Toast.makeText(context, context!!.getString(R.string.info_cannot_rate_own_post), Toast.LENGTH_SHORT).show()
                     return
                 }
@@ -262,31 +279,18 @@ class MainFragment : Fragment(), AnkoLogger {
     }
 
     private fun addNewPost(person: String, text: String) {
-        Toast.makeText(activity, getString(R.string.status_posting), Toast.LENGTH_SHORT).show()
-
         val uid = getUid()
-        val database = FirebaseDatabase.getInstance().reference
-        database.child("users").child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val user = dataSnapshot.getValue<User>(User::class.java)
-
-                if (user == null) {
-                    Toast.makeText(activity, getString(R.string.error_could_not_get_user), Toast.LENGTH_SHORT).show()
-                    error("User $uid is unexpectedly null")
-                } else {
-                    val key = database.child("posts").push().key
-                    val post = Post(uid, person, text, Helper.dateToString(LocalDate.now()))
-                    val postValues = post.toMap()
-                    val childUpdates = HashMap<String, Any>()
-                    childUpdates["/posts/$key"] = postValues
-                    database.updateChildren(childUpdates)
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                warn("getUser:onCancelled " + error.toException())
-            }
-        })
+        val key = database!!.child("posts").push().key
+        val post = Post(uid, person, text, Helper.dateToString(LocalDate.now()))
+        val postValues = post.toMap()
+        val childUpdates = HashMap<String, Any>()
+        childUpdates["/posts/$key"] = postValues
+        database!!.updateChildren(childUpdates).addOnCompleteListener { task ->
+            if(task.isSuccessful)
+                Toast.makeText(activity, getString(R.string.status_posting_successfull), Toast.LENGTH_SHORT).show()
+            else
+                Toast.makeText(activity, getString(R.string.status_posting_not_successfull), Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun onStarClicked(postRef: DatabaseReference, userRating: Float) {
@@ -348,7 +352,6 @@ class MainFragment : Fragment(), AnkoLogger {
     }
 
     private fun getUid() = FirebaseAuth.getInstance().currentUser!!.uid
-    private fun getUserName() = FirebaseAuth.getInstance().currentUser!!.displayName
 
     private class DateComparatorAscending : Comparator<PostItem> {
         override fun compare(a: PostItem?, b: PostItem?): Int {
