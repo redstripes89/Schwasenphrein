@@ -1,6 +1,7 @@
 package de.redstripes.schwasenphrein.models
 
 import android.text.TextUtils
+import androidx.annotation.Keep
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
 import de.redstripes.schwasenphrein.helpers.Helper
@@ -11,6 +12,7 @@ import org.threeten.bp.format.TextStyle
 import java.util.*
 
 @IgnoreExtraProperties
+@Keep
 class Post {
 
     var uid: String? = null
