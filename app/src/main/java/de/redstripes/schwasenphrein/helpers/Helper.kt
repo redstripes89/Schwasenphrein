@@ -2,7 +2,6 @@ package de.redstripes.schwasenphrein.helpers
 
 import android.annotation.SuppressLint
 import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 
 class Helper {

@@ -36,14 +36,9 @@ import org.jetbrains.anko.debug
 import org.jetbrains.anko.warn
 import org.threeten.bp.LocalDate
 import java.util.*
-import java.util.concurrent.ThreadLocalRandom
+import kotlin.random.Random
 
 class MainFragment : Fragment(), AnkoLogger {
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = MainFragment()
-    }
 
     private var parent: ViewGroup? = null
     private var currentUser: User? = null
@@ -214,7 +209,7 @@ class MainFragment : Fragment(), AnkoLogger {
             override fun onChildAdded(dataSnapshot: DataSnapshot, prevChildKey: String?) {
                 val post = dataSnapshot.getValue(Post::class.java) ?: return
                 post.parseDate()
-                val id = ThreadLocalRandom.current().nextLong()
+                val id = Random.nextLong()
                 keyToId[dataSnapshot.key!!] = id
                 itemAdapter.add(PostItem(id, post, letterTitleColors, letterTitleColorsDark))
             }

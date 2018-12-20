@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <integer name="slide_animation_duration">300</integer>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <integer name="slide_animation_duration" tools:keep="@integer/slide_animation_duration">300</integer>
 </resources>

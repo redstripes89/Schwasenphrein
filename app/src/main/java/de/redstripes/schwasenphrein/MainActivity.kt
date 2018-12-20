@@ -2,12 +2,12 @@ package de.redstripes.schwasenphrein
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.navigation.Navigation
 import com.firebase.ui.auth.AuthUI
@@ -18,7 +18,6 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_change_password.view.*
 import java.util.regex.Pattern
-import com.mikepenz.materialize.MaterializeBuilder
 
 class MainActivity : AppCompatActivity() {
 

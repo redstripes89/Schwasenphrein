@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
@@ -8,12 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textViewStyle">@style/TextAppearance.Default</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
-        <item name="android:statusBarColor">@color/colorPrimary</item>
-        <item name="android:toolbarStyle">@style/Widget.Toolbar</item>
         <item name="android:actionBarStyle">@style/Widget.AppBar</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-        <item name="android:navigationBarColor">@color/headblue_0</item>
-        <item name="android:windowContentTransitions">true</item>
         <item name="android:textColorPrimary">@color/headblue_0</item>
     </style>
 
@@ -24,7 +19,6 @@
 
     <style name="Widget.AppBar" parent="@style/Widget.Design.AppBarLayout" >
         <item name="popupTheme">@style/AppTheme.PopupOverlay</item>
-        <item name="android:elevation">8dp</item>
         <item name="android:orientation">vertical</item>
         <item name="liftOnScroll">true</item>
     </style>
@@ -62,7 +56,6 @@
     </style>
 
     <style name="SignInButton" parent="FirebaseUI.Button">
-        <item name="android:backgroundTint">@color/headblue_0</item>
     </style>
 
 </resources>

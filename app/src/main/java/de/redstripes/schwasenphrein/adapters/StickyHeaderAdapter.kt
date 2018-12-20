@@ -123,7 +123,7 @@ class StickyHeaderAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Sti
      * @param position
      * @return
      */
-    fun getItem(position: Int): PostItem {
+    private fun getItem(position: Int): PostItem {
         return fastAdapter!!.getItem(position)
     }
 

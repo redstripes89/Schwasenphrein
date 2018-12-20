@@ -4,10 +4,10 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
-import android.widget.AutoCompleteTextView
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView
 import com.google.android.material.textfield.TextInputLayout
 
-class TextInputAutoCompleteTextView : AutoCompleteTextView {
+class TextInputAutoCompleteTextView : AppCompatAutoCompleteTextView {
 
     constructor(context: Context) : super(context)
 

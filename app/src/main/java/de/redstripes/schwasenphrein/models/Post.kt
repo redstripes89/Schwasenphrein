@@ -1,11 +1,9 @@
 package de.redstripes.schwasenphrein.models
 
-import android.text.TextUtils
 import androidx.annotation.Keep
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
 import de.redstripes.schwasenphrein.helpers.Helper
-import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.FormatStyle
 import org.threeten.bp.format.TextStyle

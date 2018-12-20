@@ -49,7 +49,7 @@
             android:adjustViewBounds="true"
             android:contentDescription="@string/app_name"
             android:scaleType="fitCenter"
-            android:src="@drawable/icon_pig" />
+            app:srcCompat="@drawable/icon_pig" />
 
         <TextView
             android:id="@+id/startup_start_hint"

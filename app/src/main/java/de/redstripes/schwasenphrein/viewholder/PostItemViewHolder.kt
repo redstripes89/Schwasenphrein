@@ -37,10 +37,10 @@ class PostItemViewHolder(view: View, private val letterTitleColors: TypedArray?,
         val uid = getUid()
         if (item.post.stars.containsKey(uid)) {
             numStarsView.text = "${Math.round(item.post.starCount * 100.0) / 100.0} (${item.post.stars[uid]})"
-            numStarsView.setCompoundDrawablesWithIntrinsicBounds(itemView.context.getDrawable(R.drawable.ic_star_pink_24dp), null, null, null)
+            numStarsView.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(itemView.context, R.drawable.ic_star_pink_24dp), null, null, null)
         } else {
             numStarsView.text = "${Math.round(item.post.starCount * 100.0) / 100.0}"
-            numStarsView.setCompoundDrawablesWithIntrinsicBounds(itemView.context.getDrawable(R.drawable.ic_star_border_pink_24dp), null, null, null)
+            numStarsView.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(itemView.context, R.drawable.ic_star_border_pink_24dp), null, null, null)
         }
     }
 

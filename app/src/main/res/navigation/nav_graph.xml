@@ -9,5 +9,5 @@
         android:id="@+id/mainFragment"
         android:name="de.redstripes.schwasenphrein.fragments.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" ></fragment>
+        tools:layout="@layout/fragment_main" />
 </navigation>
